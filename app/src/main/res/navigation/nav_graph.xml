@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/categoryListFragment">
+    <fragment
+        android:id="@+id/categoryListFragment"
+        android:name="com.example.matconli3.CategoryListFragment"
+        android:label="fragment_category_list"
+        tools:layout="@layout/fragment_category_list" />
 </navigation>
