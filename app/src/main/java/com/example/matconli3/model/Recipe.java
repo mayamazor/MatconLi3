@@ -6,8 +6,20 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Recipe {
+
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
+
     @PrimaryKey
     @NonNull
+    private String id;
     private String name;
 
     public String getName() {

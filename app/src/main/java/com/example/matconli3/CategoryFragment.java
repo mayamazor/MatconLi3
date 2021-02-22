@@ -3,10 +3,13 @@ package com.example.matconli3;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.matconli3.model.Recipe;
 import com.example.matconli3.model.Model;
@@ -23,7 +26,15 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_category, container, false);
-        List<Recipe> data= Model.instance.getAllCategories();
+
+        ImageButton catbtn=view.findViewById(R.id.btn_category1);
+        catbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_category_to_recipe);
+
+            }
+        });
         return view;
     }
 
