@@ -12,10 +12,23 @@
         <action
             android:id="@+id/action_home_to_register"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_home_to_category"
+            app:destination="@id/categoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.matconli3.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_pop"
+            app:popUpTo="@id/fragment_home"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.matconli3.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" />
 </navigation>

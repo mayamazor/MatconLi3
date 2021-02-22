@@ -8,11 +8,11 @@ public class Model {
 
     }
 
-   public List<Category> getAllCategories(){
+   public List<Recipe> getAllCategories(){
         return null;
     }
 
-    public void addCategory(Category category){
+    public void addCategory(Recipe category){
 
     }
 }

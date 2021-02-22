@@ -1,6 +1,13 @@
 package com.example.matconli3.model;
 
-public class Category {
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+public class Recipe {
+    @PrimaryKey
+    @NonNull
     private String name;
 
     public String getName() {

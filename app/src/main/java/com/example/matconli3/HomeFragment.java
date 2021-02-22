@@ -10,11 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.matconli3.model.Category;
-import com.example.matconli3.model.Model;
-
-import java.util.List;
-
 
 public class HomeFragment extends Fragment {
 
@@ -33,6 +28,15 @@ public class HomeFragment extends Fragment {
 
            }
        });
+        Button loginbtn=view.findViewById(R.id.btn_login);
+        loginbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_home_to_category);
+
+            }
+        });
+
         return view;
     }
 }
