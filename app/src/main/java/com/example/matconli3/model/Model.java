@@ -15,7 +15,15 @@ public class Model {
     }
     public void getAllRecipes(GetAllRecipesListener listener){
         modelFirebase.getAllRecipes(listener);
+    }
 
+    ///added
+    public interface GetRecipeListener{
+        void onComplete( Recipe recipe);
+    }
+    public void getRecipe(String id,GetRecipeListener listener)
+    {
+        modelFirebase.getRecipe(id, listener);
     }
 
     public interface AddRecipeListener{
@@ -25,6 +33,23 @@ public class Model {
     public void addRecipe(Recipe recipe,AddRecipeListener listener){
 
         modelFirebase.addRecipe(recipe,listener);
+
+    }
+    public interface UpdateRecipeListener extends AddRecipeListener{
+        void onComplete();
+
+    }
+    public void updateRecipe(Recipe recipe,UpdateRecipeListener listener){
+
+        modelFirebase.updateRecipe(recipe,listener);
+
+    }
+
+
+    interface DeleteListener extends AddRecipeListener{}
+    public void deleteRecipe(Recipe recipe,DeleteListener listener){
+
+        modelFirebase.delete(recipe,listener);
 
     }
 
