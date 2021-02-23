@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "961055879545",
+    "project_id": "matconli-df099",
+    "storage_bucket": "matconli-df099.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961055879545:android:719211f6dd9f8b834abfa8",
+        "android_client_info": {
+          "package_name": "com.example.matconli3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "961055879545-kdba8jm210ck1tka2vafvsmejm6q31th.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBVupavklThQGrTSYq7MbgMJ_qraxBrIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "961055879545-kdba8jm210ck1tka2vafvsmejm6q31th.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

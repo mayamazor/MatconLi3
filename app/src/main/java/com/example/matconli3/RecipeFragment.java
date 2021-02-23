@@ -25,6 +25,7 @@ public class RecipeFragment extends Fragment {
  List<Recipe> recList=new LinkedList<Recipe>();
     ProgressBar pb;
     Button addBtn;
+    MyAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,8 +36,8 @@ public class RecipeFragment extends Fragment {
         ListView list=view.findViewById(R.id.recipes_list);
          pb=view.findViewById(R.id.recipe_list_progress);
          addBtn=view.findViewById(R.id.recipe_add_btn);
-       // pb.setVisibility(View.INVISIBLE);
-        MyAdapter adapter=new MyAdapter();
+        pb.setVisibility(View.INVISIBLE);
+        adapter=new MyAdapter();
         list.setAdapter(adapter);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,25 +45,36 @@ public class RecipeFragment extends Fragment {
                 addNewRecipe();
             }
         });
+        reloadData();
         return view;
     }
-static int id=0;
+
     private void addNewRecipe() {
+        addBtn.setEnabled(false);
+         int id= recList.size();
         Recipe re=new Recipe();
         re.setId(""+id);
         re.setName("name "+id);
-        Model.instance.addRecipe(re,null);
+        pb.setVisibility(View.VISIBLE);
+        Model.instance.addRecipe(re, new Model.AddRecipeListener() {
+            @Override
+            public void onComplete() {
+                reloadData();
+            }
+        });
+
     }
 
     void reloadData(){
-       // pb.setVisibility(View.VISIBLE);
-        //addBtn.setEnabled(false);
+        pb.setVisibility(View.VISIBLE);
+        addBtn.setEnabled(false);
         Model.instance.getAllRecipes(new Model.GetAllRecipesListener() {
             @Override
             public void onComplete(List<Recipe> data) {
                 recList=data;
                 pb.setVisibility(View.INVISIBLE);
                 addBtn.setEnabled(true);
+                adapter.notifyDataSetChanged();
             }
 
         });
@@ -71,6 +83,10 @@ static int id=0;
 
         @Override
         public int getCount() {
+            if(recList==null)
+            {
+                return 0;
+            }
             return recList.size();
         }
 
