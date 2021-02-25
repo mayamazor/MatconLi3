@@ -2,7 +2,6 @@ package com.example.matconli3;
 
 import android.os.Bundle;
 
-import androidx.core.widget.ListViewAutoScrollHelper;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -11,13 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.matconli3.model.Model;
 import com.example.matconli3.model.Recipe;
+import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -51,22 +51,7 @@ public class RecipeFragment extends Fragment {
         reloadData();
         return view;
     }
-//    private void addNewRecipe() {
-//
-//        addBtn.setEnabled(false);
-//        int id= recList.size();
-//        Recipe re=new Recipe();
-//        re.setId(""+id);
-//        re.setName("name "+id);
-//        pb.setVisibility(View.VISIBLE);
-//        Model.instance.addRecipe(re, new Model.AddRecipeListener() {
-//            @Override
-//            public void onComplete() {
-//                reloadData();
-//            }
-//        });
-//
-//    }
+
 
     void reloadData(){
         pb.setVisibility(View.VISIBLE);
@@ -109,9 +94,15 @@ public class RecipeFragment extends Fragment {
             {
                 view=getLayoutInflater().inflate(R.layout.list_row,null);
             }
-            TextView tv=view.findViewById(R.id.listRow_recipe1); //// to change
+            TextView tv=view.findViewById(R.id.listRow_recipe1);
+            ImageView imv=view.findViewById(R.id.listrow_imageview);
             Recipe re=recList.get(i);
             tv.setText(re.getName());
+            imv.setImageResource(R.drawable.picture_food);
+            if(re.getImageUrl()!=null)
+            {
+                Picasso.get().load(re.getImageUrl()).placeholder(R.drawable.picture_food).into(imv);
+            }
             return view;
         }
     }

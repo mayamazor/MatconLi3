@@ -7,6 +7,18 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Recipe {
 
+    @PrimaryKey
+    @NonNull
+    private String id;
+    private String name;
+    private String imageUrl;
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     @NonNull
     public String getId() {
@@ -17,10 +29,7 @@ public class Recipe {
         this.id = id;
     }
 
-    @PrimaryKey
-    @NonNull
-    private String id;
-    private String name;
+
 
     public String getName() {
         return name;

@@ -12,7 +12,7 @@
         android:id="@+id/addRecipe_food_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/fd80ecec48eba2a9adb76e4133905879"
+        android:src="@drawable/picture_food"
         app:layout_constraintBottom_toTopOf="@+id/addRecipe_description"
         app:layout_constraintDimensionRatio="3:2"
         app:layout_constraintEnd_toEndOf="parent"

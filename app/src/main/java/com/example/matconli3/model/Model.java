@@ -1,5 +1,6 @@
 package com.example.matconli3.model;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -10,6 +11,9 @@ public class Model {
     ModelSql modelSql=new ModelSql();
     private Model(){
     }
+//    public interface Listener<T>{
+//        void onComplete(T result);
+//    }
     public interface GetAllRecipesListener{
         void onComplete( List<Recipe> data);
     }
@@ -51,6 +55,12 @@ public class Model {
 
         modelFirebase.delete(recipe,listener);
 
+    }
+    public interface UploadImageListener{
+        public void onComplete(String url);
+    }
+    public  void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener){
+        modelFirebase.uploadImage( imageBmp, name, listener);
     }
 
 }
