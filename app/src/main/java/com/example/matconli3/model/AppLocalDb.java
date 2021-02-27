@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 import com.example.matconli3.MainActivity;
 import com.example.matconli3.MyApplication;
 
-@Database(entities = {Recipe.class}, version = 5)
+@Database(entities = {Recipe.class}, version = 6)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract RecipesDao recipeDao();
 }

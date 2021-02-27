@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ModelFirebase {
-    public void getAllRecipes(Model.GetAllRecipesListener listener) {
+    public void getAllRecipes(Long lastUpdated, Model.GetAllRecipesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("recipes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -35,8 +35,10 @@ public class ModelFirebase {
                 {
                     for(DocumentSnapshot doc:task.getResult())
                     {
-                        Recipe rp=doc.toObject(Recipe.class);
-                        data.add(rp);
+                        Recipe re=new Recipe();
+                        re.fromMap(doc.getData());
+                       // Recipe rp=doc.toObject(Recipe.class);
+                        data.add(re);
                     }
                 }
                 listener.onComplete(data);
@@ -52,7 +54,7 @@ public class ModelFirebase {
 
 // Add a new document with a generated ID
         db.collection("recipes").document(recipe.getName())
-                .set(recipe).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .set(recipe.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
              Log.d("TAG", "recipe added successfully");
@@ -93,13 +95,13 @@ public class ModelFirebase {
     }
 
     public void delete(Recipe recipe,Model.DeleteListener listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("recipes").document(recipe.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                listener.onComplete();
-            }
-        });
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("recipes").document(recipe.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                listener.onComplete();
+//            }
+//        });
     }
 
     public  void uploadImage(Bitmap imageBmp, String name, Model.UploadImageListener listener){

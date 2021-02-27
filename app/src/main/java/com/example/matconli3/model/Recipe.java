@@ -4,6 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+
+
+import java.util.HashMap;
+import java.util.Map;
+
 @Entity
 public class Recipe {
 
@@ -12,28 +19,56 @@ public class Recipe {
     private String id;
     private String name;
     private String imageUrl;
+    private Long lastUpdated;
+
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("name", name);
+        result.put("imageUrl", imageUrl);
+        result.put("lastUpdated",FieldValue.serverTimestamp() );
+        return result;
+    }
+
+    public void fromMap( Map<String, Object> map ){
+     id=(String)map.get("id");
+     name=(String)map.get("name");
+     imageUrl=(String)map.get("imageUrl");
+     Timestamp ts=(Timestamp)map.get("lastUpdated");
+     lastUpdated=ts.getSeconds();
+     //long time=ts.toDate().getTime();
+    }
+
+
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public Long getLastUpdated() {
+        return lastUpdated;
+    }
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setLastUpdate(Long lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    @NonNull
-    public String getId() {
-        return id;
-    }
-
     public void setId(@NonNull String id) {
         this.id = id;
     }
 
-
-
-    public String getName() {
-        return name;
-    }
 
     public void setName(String name) {
         this.name = name;

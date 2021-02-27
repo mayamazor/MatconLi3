@@ -1,10 +1,14 @@
 package com.example.matconli3.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.matconli3.MyApplication;
 
 import java.util.List;
 
@@ -14,26 +18,62 @@ public class Model {
     ModelSql modelSql=new ModelSql();
     private Model(){
     }
-//    public interface Listener<T>{
-//        void onComplete(T result);
-//    }
+
     public interface GetAllRecipesListener{
         void onComplete( List<Recipe> data);
     }
-   MutableLiveData<List<Recipe>> recipeList=new MutableLiveData<List<Recipe>>();
+   MutableLiveData<List<Recipe>> recipeList;
     public MutableLiveData<List<Recipe>> getAllRecipes(){
+        if(recipeList==null){
+            recipeList=modelSql.getAllRecipes();
+        }
 
         return recipeList;
     }
 
     public void refreshAllRecipes(GetAllRecipesListener listener){
-        modelFirebase.getAllRecipes(new GetAllRecipesListener() {
+        //1.get local last update date
+      SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
+      Long lastUpdated=sp.getLong("lastUpdated",0);
+        //2. get all updated record from firebase from the last update date
+        modelFirebase.getAllRecipes(lastUpdated,new GetAllRecipesListener() {
             @Override
             public void onComplete(List<Recipe> result) {
-                recipeList.setValue(result);
-                listener.onComplete(null);
+
+                //3. insert the new updates to he local db
+                long lastU=0;
+                for (Recipe r:result) {
+                    modelSql.addRecipe(r,null);
+                    if(r.getLastUpdated()>lastU){
+                        lastU=r.getLastUpdated();
+                    }
+                }
+
+
+                //4. update the local last update date
+               SharedPreferences.Editor editor= sp.edit();
+                editor.putLong("lastUpdated",lastU);
+                editor.commit();
+
+
+                //5. return the updates data to the listeners
+
+
+
+
+
             }
         });
+
+
+
+//        modelFirebase.getAllRecipes(new GetAllRecipesListener() {
+//            @Override
+//            public void onComplete(List<Recipe> result) {
+//                recipeList.setValue(result);
+//                listener.onComplete(null);
+//            }
+//        });
       //  return recipeList;
     }
 
