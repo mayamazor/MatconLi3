@@ -3,6 +3,9 @@ package com.example.matconli3.model;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.List;
 
 public class Model {
@@ -17,8 +20,21 @@ public class Model {
     public interface GetAllRecipesListener{
         void onComplete( List<Recipe> data);
     }
-    public void getAllRecipes(GetAllRecipesListener listener){
-        modelFirebase.getAllRecipes(listener);
+   MutableLiveData<List<Recipe>> recipeList=new MutableLiveData<List<Recipe>>();
+    public MutableLiveData<List<Recipe>> getAllRecipes(){
+
+        return recipeList;
+    }
+
+    public void refreshAllRecipes(GetAllRecipesListener listener){
+        modelFirebase.getAllRecipes(new GetAllRecipesListener() {
+            @Override
+            public void onComplete(List<Recipe> result) {
+                recipeList.setValue(result);
+                listener.onComplete(null);
+            }
+        });
+      //  return recipeList;
     }
 
     ///added
