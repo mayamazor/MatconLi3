@@ -3,10 +3,8 @@ package com.example.matconli3.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.matconli3.MyApplication;
 
@@ -18,68 +16,58 @@ public class Model {
     ModelSql modelSql=new ModelSql();
     private Model(){
     }
-
-    public interface GetAllRecipesListener{
-        void onComplete( List<Recipe> data);
+    public interface Listener<T> {
+        void onComplete(T result);
     }
-   MutableLiveData<List<Recipe>> recipeList;
-    public MutableLiveData<List<Recipe>> getAllRecipes(){
+    LiveData<List<Recipe>> recipeList;
+    public LiveData<List<Recipe>> getAllRecipes(){
         if(recipeList==null){
             recipeList=modelSql.getAllRecipes();
+            refreshAllRecipes(null);
         }
 
         return recipeList;
     }
 
-    public void refreshAllRecipes(GetAllRecipesListener listener){
+    public interface GetAllRecipesListener{
+        void onComplete();
+    }
+
+
+    public void refreshAllRecipes(final GetAllRecipesListener listener) {
         //1.get local last update date
-      SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
-      Long lastUpdated=sp.getLong("lastUpdated",0);
+        final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
+        long lastUpdated = sp.getLong("lastUpdated", 0);
         //2. get all updated record from firebase from the last update date
-        modelFirebase.getAllRecipes(lastUpdated,new GetAllRecipesListener() {
+        modelFirebase.getAllRecipes(lastUpdated, new ModelFirebase.GetAllRecipesListener() {
             @Override
             public void onComplete(List<Recipe> result) {
 
                 //3. insert the new updates to he local db
-                long lastU=0;
-                for (Recipe r:result) {
-                    modelSql.addRecipe(r,null);
-                    if(r.getLastUpdated()>lastU){
-                        lastU=r.getLastUpdated();
+                long lastU = 0;
+                for (Recipe r : result) {
+                    modelSql.addRecipe(r, null);
+                    if (r.getLastUpdated() > lastU) {
+                        lastU = r.getLastUpdated();
                     }
                 }
-
-
                 //4. update the local last update date
-               SharedPreferences.Editor editor= sp.edit();
-                editor.putLong("lastUpdated",lastU);
-                editor.commit();
-
+//               SharedPreferences.Editor editor= sp.edit();
+//                editor.putLong("lastUpdated",lastU);
+//                editor.commit();
+                sp.edit().putLong("lastUpdated", lastU).commit();
 
                 //5. return the updates data to the listeners
-
-
-
-
-
+                if (listener != null) {
+                    listener.onComplete();
+                }
             }
         });
-
-
-
-//        modelFirebase.getAllRecipes(new GetAllRecipesListener() {
-//            @Override
-//            public void onComplete(List<Recipe> result) {
-//                recipeList.setValue(result);
-//                listener.onComplete(null);
-//            }
-//        });
-      //  return recipeList;
     }
 
-    ///added
+
     public interface GetRecipeListener{
-        void onComplete( Recipe recipe);
+        void onComplete(Recipe recipe);
     }
     public void getRecipe(String id,GetRecipeListener listener)
     {
@@ -90,16 +78,25 @@ public class Model {
         void onComplete();
 
     }
-    public void addRecipe(Recipe recipe,AddRecipeListener listener){
+    public void addRecipe(final Recipe recipe,final AddRecipeListener listener){
 
-        modelFirebase.addRecipe(recipe,listener);
+        modelFirebase.addRecipe(recipe,new AddRecipeListener() {
+            @Override
+            public void onComplete() {
+                refreshAllRecipes(new GetAllRecipesListener() {
+                    @Override
+                    public void onComplete() {
+                        listener.onComplete();
+                    }
+                });
+            }
+        });
+
 
     }
     public interface UpdateRecipeListener extends AddRecipeListener{
-        void onComplete();
-
     }
-    public void updateRecipe(Recipe recipe,UpdateRecipeListener listener){
+    public void updateRecipe(final Recipe recipe,final AddRecipeListener listener){
 
         modelFirebase.updateRecipe(recipe,listener);
 
@@ -107,13 +104,15 @@ public class Model {
 
 
     interface DeleteListener extends AddRecipeListener{}
+
     public void deleteRecipe(Recipe recipe,DeleteListener listener){
 
         modelFirebase.delete(recipe,listener);
 
     }
-    public interface UploadImageListener{
-        public void onComplete(String url);
+    public interface UploadImageListener extends Listener<String>{
+
+
     }
     public  void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener){
         modelFirebase.uploadImage( imageBmp, name, listener);

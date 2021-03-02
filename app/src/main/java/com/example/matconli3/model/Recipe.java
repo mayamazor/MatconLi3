@@ -15,8 +15,9 @@ import java.util.Map;
 public class Recipe {
 
     @PrimaryKey
+    //  @NonNull
+    //  private String id;
     @NonNull
-    private String id;
     private String name;
     private String imageUrl;
     private Long lastUpdated;
@@ -24,7 +25,7 @@ public class Recipe {
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id", id);
+        //    result.put("id", id);
         result.put("name", name);
         result.put("imageUrl", imageUrl);
         result.put("lastUpdated",FieldValue.serverTimestamp() );
@@ -32,12 +33,12 @@ public class Recipe {
     }
 
     public void fromMap( Map<String, Object> map ){
-     id=(String)map.get("id");
-     name=(String)map.get("name");
-     imageUrl=(String)map.get("imageUrl");
-     Timestamp ts=(Timestamp)map.get("lastUpdated");
-     lastUpdated=ts.getSeconds();
-     //long time=ts.toDate().getTime();
+        // id=(String)map.get("id");
+        name=(String)map.get("name");
+        imageUrl=(String)map.get("imageUrl");
+        Timestamp ts=(Timestamp)map.get("lastUpdated");
+        lastUpdated=ts.getSeconds();
+        //long time=ts.toDate().getTime();
     }
 
 
@@ -48,28 +49,27 @@ public class Recipe {
     public Long getLastUpdated() {
         return lastUpdated;
     }
+    //    @NonNull
+//    public String getId() {
+//        return id;
+//    }
     @NonNull
-    public String getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setLastUpdate(Long lastUpdated) {
+    public void setLastUpdated(Long lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
-    public void setId(@NonNull String id) {
-        this.id = id;
-    }
-
-
+    //    @NonNull
+//    public void setId( String id) {
+//        this.id = id;
+//    }
+    @NonNull
     public void setName(String name) {
         this.name = name;
     }

@@ -13,10 +13,14 @@ import java.util.List;
 @Dao
 public interface RecipesDao {
     @Query("select * from Recipe")
-    MutableLiveData<List<Recipe>> getAllRecipes();
+    LiveData<List<Recipe>> getAllRecipes();
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(Recipe... recipe);
+    void insertAll(Recipe... recipes);
     @Delete
     void delete(Recipe recipe);
 
 }
+
+
+
+

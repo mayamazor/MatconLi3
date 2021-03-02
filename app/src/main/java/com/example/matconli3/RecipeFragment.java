@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,59 +29,57 @@ import java.util.List;
 
 
 public class RecipeFragment extends Fragment {
- RecipeListViewModel viewModel;
+    RecipeListViewModel viewModel;
     ProgressBar pb;
     Button addBtn;
-   MyAdapter adapter;
-   Button detailsBtn;
+    MyAdapter adapter;
+    SwipeRefreshLayout sref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        Log.d("TAG","onCreateView");
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-       // Log.d("TAG","onCreateView");     // cheack Eliav
         viewModel = new ViewModelProvider(this).get(RecipeListViewModel.class);
         ListView list=view.findViewById(R.id.recipes_list);
-         pb=view.findViewById(R.id.recipe_list_progress);
-        pb.setVisibility(View.INVISIBLE);
-       adapter=new MyAdapter();
-        list.setAdapter(adapter);
-        list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Navigation.findNavController(view).navigate(R.id.action_recipe_to_add);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        pb=view.findViewById(R.id.recipe_list_progress);
         addBtn=view.findViewById(R.id.recipe_add_btn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        pb.setVisibility(View.INVISIBLE);
+        sref = view.findViewById(R.id.recipes_list_swipe);
+
+        sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-               Navigation.findNavController(v).navigate(R.id.action_recipe_to_add);
+            public void onRefresh() {
+                sref.setRefreshing(true);
+                reloadData();
+
             }
         });
+
+        adapter=new MyAdapter();
+        list.setAdapter(adapter);
 //        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //                String name = viewModel.getList().getValue().get(i).getName();
-//                RecipeListFragmentDirections.ActionRecipeFragmentToRecipeDetailsFragment direc = RecipeListFragmentDirections.actionRecipeListFragmentToRecipeDetailsFragment(name);
+//                RecipeFragmentDirections.ActionRecipeToRecipeDetails direc = RecipeFragmentDirections.actionRecipeToRecipeDetails(name);
 //                Navigation.findNavController(view).navigate(direc);
 //            }
 //        });
 
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_recipe_to_add);
+            }
+        });
         viewModel.getList().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
-           adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
-        reloadData();
         return view;
     }
 
@@ -90,11 +89,11 @@ public class RecipeFragment extends Fragment {
         addBtn.setEnabled(false);
         Model.instance.refreshAllRecipes(new Model.GetAllRecipesListener() {
             @Override
-            public void onComplete(List<Recipe> data) {
+            public void onComplete() {
                 pb.setVisibility(View.INVISIBLE);
                 addBtn.setEnabled(true);
+                sref.setRefreshing(false);
             }
-
         });
     }
     class MyAdapter extends BaseAdapter {
@@ -109,12 +108,12 @@ public class RecipeFragment extends Fragment {
         }
 
         @Override
-        public Object getItem(int position) {
+        public Object getItem(int i) {
             return null;
         }
 
         @Override
-        public long getItemId(int position) {
+        public long getItemId(int i) {
             return 0;
         }
 

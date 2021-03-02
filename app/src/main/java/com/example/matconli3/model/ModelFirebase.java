@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,9 +26,15 @@ import java.util.List;
 import java.util.Map;
 
 public class ModelFirebase {
-    public void getAllRecipes(Long lastUpdated, Model.GetAllRecipesListener listener) {
+    interface GetAllRecipesListener{
+        void onComplete(List<Recipe> list);
+    }
+
+    public void getAllRecipes(Long lastUpdated, final GetAllRecipesListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("recipes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Timestamp ts = new Timestamp(lastUpdated,0);
+        db.collection("recipes").whereGreaterThanOrEqualTo("lastUpdated",ts)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Recipe> data= new LinkedList<Recipe>();
@@ -37,18 +44,19 @@ public class ModelFirebase {
                     {
                         Recipe re=new Recipe();
                         re.fromMap(doc.getData());
-                       // Recipe rp=doc.toObject(Recipe.class);
+                        // Recipe rp=doc.toObject(Recipe.class);
                         data.add(re);
+                        Log.d("TAG","re: " +re.getName());
+
                     }
                 }
                 listener.onComplete(data);
             }
         });
-        List<Recipe> data=new LinkedList<Recipe>();
-        listener.onComplete(data);
+
     }
 
-    public void addRecipe(Recipe recipe, Model.AddRecipeListener listener) {
+    public void addRecipe(Recipe recipe,final Model.AddRecipeListener listener) {
         // Access a Cloud Firestore instance from your Activity
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -57,8 +65,8 @@ public class ModelFirebase {
                 .set(recipe.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-             Log.d("TAG", "recipe added successfully");
-             listener.onComplete();
+                Log.d("TAG", "recipe added successfully");
+                listener.onComplete();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -68,28 +76,29 @@ public class ModelFirebase {
             }
         });
 
-
     }
 
-    public void updateRecipe(Recipe recipe, Model.UpdateRecipeListener listener) {
+    public void updateRecipe(Recipe recipe, Model.AddRecipeListener listener) {
         addRecipe(recipe,listener);
     }
 
-    public void getRecipe(String id, final Model.GetRecipeListener listener) {
+    public void getRecipe(String name, final Model.GetRecipeListener listener) {
         FirebaseFirestore db=FirebaseFirestore.getInstance();
-        db.collection("recipes").document().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("recipes").document(name).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 Recipe recipe=null;
                 if(task.isSuccessful())
                 {
                     DocumentSnapshot doc=task.getResult();
-                   if(doc!=null)
-                   {
-                       recipe=task.getResult().toObject(Recipe.class);
-                   }
+                    if(doc!=null)
+                    {
+                        recipe=new Recipe();
+                        recipe.fromMap(task.getResult().getData());
+
+                    }
                 }
-               listener.onComplete(recipe);
+                listener.onComplete(recipe);
             }
         });
     }
@@ -104,7 +113,7 @@ public class ModelFirebase {
 //        });
     }
 
-    public  void uploadImage(Bitmap imageBmp, String name, Model.UploadImageListener listener){
+    public  void uploadImage(Bitmap imageBmp,String name,final Model.UploadImageListener listener){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference imagesRef = storage.getReference().child("images").child(name);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
