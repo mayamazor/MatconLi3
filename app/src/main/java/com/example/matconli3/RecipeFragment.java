@@ -59,14 +59,14 @@ public class RecipeFragment extends Fragment {
 
         adapter=new MyAdapter();
         list.setAdapter(adapter);
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String name = viewModel.getList().getValue().get(i).getName();
-//                RecipeFragmentDirections.ActionRecipeToRecipeDetails direc = RecipeFragmentDirections.actionRecipeToRecipeDetails(name);
-//                Navigation.findNavController(view).navigate(direc);
-//            }
-//        });
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String name = viewModel.getList().getValue().get(i).getName();
+                RecipeFragmentDirections.ActionRecipeToRecipeDetails direc = RecipeFragmentDirections.actionRecipeToRecipeDetails(name);
+                Navigation.findNavController(view).navigate(direc);
+            }
+        });
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
