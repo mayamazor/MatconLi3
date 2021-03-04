@@ -1,14 +1,18 @@
 package com.example.matconli3.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import static android.content.Context.MODE_PRIVATE;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.matconli3.MyApplication;
+import com.example.matconli3.model.User.User;
 
 import java.util.List;
 
@@ -16,107 +20,139 @@ public class Model {
     public final static Model instance = new Model();
     ModelFirebase modelFirebase=new ModelFirebase();
     ModelSql modelSql=new ModelSql();
-    private Model(){
+//    private Model(){
+//    }
+
+    public interface Listener<T>{
+        void onComplete(T data);
+    }
+    public interface CompListener{
+        void onComplete();
+    }
+    public Model(){
+
+    }
+//
+//    public interface GetAllRecipesListener{
+//        void onComplete( List<Recipe> data);
+//    }
+//   MutableLiveData<List<Recipe>> recipeList;
+public LiveData<List<Recipe>> getAllRecipes(){
+    LiveData<List<Recipe>> liveData = (LiveData<List<Recipe>>) AppLocalDb.db.recipeDao().getAllRecipes();
+    refreshAllRecipes(null);
+    return liveData;
+}
+    public LiveData<List<Recipe>> getUserRecommends(User currentUser) {
+        return AppLocalDb.db.recipeDao().getUserRecipes(currentUser.id);
     }
 
-    public interface GetAllRecipesListener{
-        void onComplete( List<Recipe> data);
-    }
-   MutableLiveData<List<Recipe>> recipeList;
-    public MutableLiveData<List<Recipe>> getAllRecipes(){
-        if(recipeList==null){
-            recipeList=modelSql.getAllRecipes();
-        }
+    public void refreshAllRecipes(final CompListener listener){
+        long lastUpdated = MyApplication.context.getSharedPreferences("TAG",MODE_PRIVATE).getLong("RecipesLastUpdateDate",0);
 
-        return recipeList;
-    }
-
-    public void refreshAllRecipes(GetAllRecipesListener listener){
-        //1.get local last update date
-      SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
-      Long lastUpdated=sp.getLong("lastUpdated",0);
-        //2. get all updated record from firebase from the last update date
-        modelFirebase.getAllRecipes(lastUpdated,new GetAllRecipesListener() {
+        ModelFirebase.getAllRecipesSince(lastUpdated,new Listener<List<Recipe>>() {
+            @SuppressLint("StaticFieldLeak")
             @Override
-            public void onComplete(List<Recipe> result) {
-
-                //3. insert the new updates to he local db
-                long lastU=0;
-                for (Recipe r:result) {
-                    modelSql.addRecipe(r,null);
-                    if(r.getLastUpdated()>lastU){
-                        lastU=r.getLastUpdated();
+            public void onComplete(final List<Recipe> data) {
+                new AsyncTask<String,String,String>(){
+                    @Override
+                    protected String doInBackground(String... strings) {
+                        long lastUpdated = 0;
+                        for(Recipe recipe : data){
+                            AppLocalDb.db.recipeDao().insertAll(recipe);
+                            if (recipe.lastUpdated > lastUpdated) lastUpdated = recipe.lastUpdated;
+                        }
+                        SharedPreferences.Editor edit = MyApplication.context.getSharedPreferences("TAG", MODE_PRIVATE).edit();
+                        edit.putLong("RecipesLastUpdateDate",lastUpdated);
+                        edit.commit();
+                        return "";
                     }
-                }
-
-
-                //4. update the local last update date
-               SharedPreferences.Editor editor= sp.edit();
-                editor.putLong("lastUpdated",lastU);
-                editor.commit();
-
-
-                //5. return the updates data to the listeners
-
-
-
-
-
+                    @Override
+                    protected void onPostExecute(String s) {
+                        super.onPostExecute(s);
+                        if (listener!=null)  listener.onComplete();
+                    }
+                }.execute("");
             }
         });
-
-
-
-//        modelFirebase.getAllRecipes(new GetAllRecipesListener() {
-//            @Override
-//            public void onComplete(List<Recipe> result) {
-//                recipeList.setValue(result);
-//                listener.onComplete(null);
-//            }
-//        });
-      //  return recipeList;
     }
 
-    ///added
-    public interface GetRecipeListener{
-        void onComplete( Recipe recipe);
-    }
-    public void getRecipe(String id,GetRecipeListener listener)
-    {
-        modelFirebase.getRecipe(id, listener);
+    public void updateRecipe(Recipe recipe,Listener<Boolean> listener) {
+        modelFirebase.updateRecipe(recipe, (CompListener) listener);
+
+//        AppLocalDb.db.recommendDao().insertAll(recommend);
     }
 
-    public interface AddRecipeListener{
-        void onComplete();
 
-    }
-    public void addRecipe(Recipe recipe,AddRecipeListener listener){
 
+    public void addRec(Recipe recipe,Listener<Boolean> listener) {
         modelFirebase.addRecipe(recipe,listener);
 
-    }
-    public interface UpdateRecipeListener extends AddRecipeListener{
-        void onComplete();
-
-    }
-    public void updateRecipe(Recipe recipe,UpdateRecipeListener listener){
-
-        modelFirebase.updateRecipe(recipe,listener);
-
+//        AppLocalDb.db.recommendDao().insertAll(recommend);
     }
 
-
-    interface DeleteListener extends AddRecipeListener{}
-    public void deleteRecipe(Recipe recipe,DeleteListener listener){
-
-        modelFirebase.delete(recipe,listener);
-
+    public void deleteRecipe(Recipe recipe) {
+        modelFirebase.deleteRecipe(recipe.id);
     }
-    public interface UploadImageListener{
-        public void onComplete(String url);
+
+    @SuppressLint("StaticFieldLeak")
+    public void deleteRecipes(final List<Recipe> recipes) {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                for (Recipe recipe : recipes) {
+                    AppLocalDb.db.recipeDao().delete(recipe);
+                    Log.d("TAG","deleted");
+                }
+                return "";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Log.d("TAG", "deleted recipes");
+            }
+        }.execute("");
     }
-    public  void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener){
-        modelFirebase.uploadImage( imageBmp, name, listener);
-    }
+
+//    public interface GetRecipeListener{
+//        void onComplete( Recipe recipe);
+//    }
+//    public void getRecipe(String id,GetRecipeListener listener)
+//    {
+//        modelFirebase.getRecipe(id, listener);
+//    }
+//
+//    public interface AddRecipeListener{
+//        void onComplete();
+//
+//    }
+//    public void addRecipe(Recipe recipe,AddRecipeListener listener){
+//
+//        modelFirebase.addRecipe(recipe,listener);
+//
+//    }
+//    public interface UpdateRecipeListener extends AddRecipeListener{
+//        void onComplete();
+//
+//    }
+//    public void updateRecipe(Recipe recipe,UpdateRecipeListener listener){
+//
+//        modelFirebase.updateRecipe(recipe,listener);
+//
+//    }
+//
+//
+//    interface DeleteListener extends AddRecipeListener{}
+//    public void deleteRecipe(Recipe recipe,DeleteListener listener){
+//
+//        modelFirebase.delete(recipe,listener);
+//
+//    }
+//    public interface UploadImageListener{
+//        public void onComplete(String url);
+//    }
+//    public  void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener){
+//        modelFirebase.uploadImage( imageBmp, name, listener);
+//    }
 
 }

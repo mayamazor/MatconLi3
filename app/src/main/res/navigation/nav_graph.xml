@@ -8,19 +8,20 @@
         android:id="@+id/fragment_home"
         android:name="com.example.matconli3.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_home_to_register"
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_home_to_category"
-            app:destination="@id/categoryFragment" />
+            app:destination="@id/categoryFragment"
+            app:popUpTo="@id/categoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.matconli3.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_pop"
             app:popUpTo="@id/fragment_home"
@@ -30,7 +31,7 @@
         android:id="@+id/categoryFragment"
         android:name="com.example.matconli3.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" >
+        tools:layout="@layout/fragment_category">
         <action
             android:id="@+id/action_category_to_recipe"
             app:destination="@id/recipeFragment" />
@@ -39,32 +40,33 @@
         android:id="@+id/recipeFragment"
         android:name="com.example.matconli3.RecipeFragment"
         android:label="fragment_recipe"
-        tools:layout="@layout/fragment_recipe" >
+        tools:layout="@layout/fragment_recipe">
         <action
             android:id="@+id/action_recipe_to_add"
-            app:destination="@id/addFragment" />
-        <action
-            android:id="@+id/action_recipe_to_recipeDetails"
-            app:destination="@id/recipeDetailsFragment" />
+            app:destination="@id/addFragment"
+            app:popUpTo="@id/addFragment" />
+        <!--        <action-->
+        <!--            android:id="@+id/action_recipe_to_recipeDetails"-->
+        <!--            app:destination="@id/recipeDetailsFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.matconli3.AddFragment"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" >
+        tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_add_to_recipe"
             app:destination="@id/recipeFragment"
             app:popUpTo="@id/addFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/recipeDetailsFragment"
-        android:name="com.example.matconli3.RecipeDetailsFragment"
-        android:label="fragment_recipe_details"
-        tools:layout="@layout/fragment_recipe_details">
-        <argument
-            android:name="recipeName"
-            app:argType="string" />
-    </fragment>
+    <!--    <fragment-->
+    <!--        android:id="@+id/recipeDetailsFragment"-->
+    <!--        android:name="com.example.matconli3.RecipeDetailsFragment"-->
+    <!--        android:label="fragment_recipe_details"-->
+    <!--        tools:layout="@layout/fragment_recipe_details">-->
+    <!--        <argument-->
+    <!--            android:name="recipeName"-->
+    <!--            app:argType="string" />-->
+    <!--    </fragment>-->
 </navigation>
