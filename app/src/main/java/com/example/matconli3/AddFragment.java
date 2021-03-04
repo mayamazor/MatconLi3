@@ -40,8 +40,8 @@ public class AddFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_add, container, false);
-         avatarImageView = view.findViewById(R.id.addRecipe_food_icon);
-         editbtn=view.findViewById(R.id.addRecipe_edit);
+        avatarImageView = view.findViewById(R.id.addRecipe_food_icon);
+        editbtn=view.findViewById(R.id.addRecipe_edit);
         descriptionEdit = view.findViewById(R.id.addRecipe_description_edit);
         savebtn=view.findViewById(R.id.addRecipe_back);
         cancelbtn=view.findViewById(R.id.addRecipe_cancel);
@@ -67,19 +67,19 @@ public class AddFragment extends Fragment {
     }
 
     private void saveRecipe() {
-      Recipe recipe= new Recipe();
-      recipe.setName(descriptionEdit.getText().toString());
+        final Recipe recipe= new Recipe();
+        recipe.setName(descriptionEdit.getText().toString());
         BitmapDrawable drawable= (BitmapDrawable)avatarImageView.getDrawable();
         Bitmap bitmap= drawable.getBitmap();
 
         Model.instance.uploadImage(bitmap,recipe.getName(), new Model.UploadImageListener() {
             @Override
             public void onComplete(String url) {
-               if(url==null){
-                   displayFailedError();
+                if(url==null){
+                    displayFailedError();
 
                 }
-               else{
+                else{
                     recipe.setImageUrl(url);
                     Model.instance.addRecipe(recipe, new Model.AddRecipeListener(){
                         @Override
@@ -87,7 +87,7 @@ public class AddFragment extends Fragment {
                             Navigation.findNavController(savebtn).popBackStack();
                         }
                     });
-               }
+                }
             }
 
         });
@@ -99,7 +99,7 @@ public class AddFragment extends Fragment {
         builder.setMessage("Saving image failed, please try again later");
         builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog, int i) {
                 dialog.dismiss();
             }
         });

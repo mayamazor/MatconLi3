@@ -5,21 +5,18 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+
 import java.util.List;
 
 public class ModelSql {
-    public interface GetAllRecipesListener{
-        void onComplete( List<Recipe> data);
-    }
 
-    public MutableLiveData<List<Recipe>> getAllRecipes() {
+    public LiveData<List<Recipe>> getAllRecipes() {
         return AppLocalDb.db.recipeDao().getAllRecipes();
     }
-
     public interface AddRecipeListener{
         void onComplete();
     }
-    public void addRecipe(Recipe recipe,AddRecipeListener listener){
+    public void addRecipe(final Recipe recipe,final Model.AddRecipeListener listener){
         class MyAsyncTask extends AsyncTask {
 
             @Override
@@ -27,7 +24,6 @@ public class ModelSql {
                 AppLocalDb.db.recipeDao().insertAll(recipe);
                 return null;
             }
-
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
@@ -36,9 +32,8 @@ public class ModelSql {
                     listener.onComplete();
                 }
             }
-        }
+        };
         MyAsyncTask task=new MyAsyncTask();
         task.execute();
-
     }
 }

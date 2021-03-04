@@ -14,14 +14,14 @@ import java.util.List;
 
 
 public class RecipeListViewModel extends ViewModel {
-   private MutableLiveData<List<Recipe>> recList;
+    private LiveData<List<Recipe>> recList;
 
-public RecipeListViewModel(){
-    Log.d("TAG","RecipeListViewModel");
-   recList = Model.instance.getAllRecipes();
-}
-    MutableLiveData<List<Recipe>> getList(){
-       return recList;
-   }
+    public RecipeListViewModel(){
+        Log.d("TAG","RecipeListViewModel");
+        recList = Model.instance.getAllRecipes();
+    }
+    LiveData<List<Recipe>> getList(){
+        return recList;
+    }
 
 }
