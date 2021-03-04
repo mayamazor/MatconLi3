@@ -40,7 +40,7 @@ public class UserFirebase {
                         if (task.isSuccessful()) {
                             Log.d("TAG", "createUserWithEmail:success"+ auth.getCurrentUser().getDisplayName());
 
-//                            updateUserProfile(user, listener);
+
                             DocumentReference documentReference = db.collection("users").document(auth.getCurrentUser().getUid());
                             Map<String,Object> userMap = new HashMap<>();
                             user.id= auth.getCurrentUser().getUid();
@@ -113,10 +113,5 @@ public class UserFirebase {
         );
     }
 
-//    public static String getUser(String id){
-//        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        return db.collection("users").document(id).getId();
-//
-//
-//    }
+
 }

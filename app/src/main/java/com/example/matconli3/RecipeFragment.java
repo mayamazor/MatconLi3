@@ -1,11 +1,16 @@
 package com.example.matconli3;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
@@ -22,6 +27,7 @@ import android.widget.TextView;
 
 import com.example.matconli3.model.Model;
 import com.example.matconli3.model.Recipe;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
@@ -29,110 +35,170 @@ import java.util.List;
 
 
 public class RecipeFragment extends Fragment {
- RecipeListViewModel viewModel;
-    ProgressBar pb;
-    Button addBtn;
-   MyAdapter adapter;
-    SwipeRefreshLayout sref;
+   RecipeAdapter adapter;
+    RecyclerView list;
+    List<Recipe> data = new LinkedList<Recipe>();
+    RecipeListViewModel viewModel;
+    LiveData<List<Recipe>> liveData;
+
+    SwipeRefreshLayout swipeRefresh;
+
+    interface Delegate{
+        void onItemSelected(Recipe recipe);
+    }
+
+    Delegate parent;
+    public RecipeFragment() {
+
+    }
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof Delegate){
+            parent = (Delegate) getActivity();
+        } else{
+            throw new RuntimeException(context.toString() + "must implement Delegate");
+        }
+        setHasOptionsMenu(true);
+        viewModel = new ViewModelProvider(this).get(RecipeListViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.d("TAG","onCreateView");
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-        viewModel = new ViewModelProvider(this).get(RecipeListViewModel.class);
-        ListView list=view.findViewById(R.id.recipes_list);
-        pb=view.findViewById(R.id.recipe_list_progress);
-        addBtn=view.findViewById(R.id.recipe_add_btn);
-        pb.setVisibility(View.INVISIBLE);
-//        sref = view.findViewById(R.id.recipes_list_swipe);
+        Button loginBtn = view.findViewById(R.id.login_now_button);
+        FirebaseAuth fauth = FirebaseAuth.getInstance();
 
-        sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        list = view.findViewById(R.id.recommend_list_list);
+        list.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        list.setLayoutManager(layoutManager);
+
+        adapter = new RecipeAdapter();
+        list.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Log.d("TAG", "ROW WAS CLICKED"+ position);
+                Recipe recipe = data.get(position);
+                parent.onItemSelected(recipe);
+            }
+        });
+
+
+        swipeRefresh = view.findViewById(R.id.students_list_swipe_refresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                sref.setRefreshing(true);
-                reloadData();
-
+                viewModel.refresh(new Model.CompListener() {
+                    @Override
+                    public void onComplete() {
+                        swipeRefresh.setRefreshing(false);
+                    }
+                });
             }
         });
+        swipeRefresh.setRefreshing(true);
 
-        adapter=new MyAdapter();
-        list.setAdapter(adapter);
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String name = viewModel.getList().getValue().get(i).getName();
-//                RecipeFragmentDirections.ActionRecipeToRecipeDetails direc = RecipeFragmentDirections.actionRecipeToRecipeDetails(name);
-//                Navigation.findNavController(view).navigate(direc);
-//            }
-//        });
+        //Live data is getting from localDb
+        liveData = viewModel.getData();
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               Navigation.findNavController(v).navigate(R.id.action_recipe_to_add);
-            }
-        });
-        viewModel.getList().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+        liveData.observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
-           adapter.notifyDataSetChanged();
+                data = recipes;
+                adapter.notifyDataSetChanged();
+                swipeRefresh.setRefreshing(false);
             }
         });
+
         return view;
     }
 
-
-    void reloadData(){
-        pb.setVisibility(View.VISIBLE);
-        addBtn.setEnabled(false);
-//        Model.instance.refreshAllRecipes(new Model.GetAllRecipesListener() {
-//            @Override
-//            public void onComplete() {
-//                pb.setVisibility(View.INVISIBLE);
-//                addBtn.setEnabled(true);
-//                sref.setRefreshing(false);
-//            }
-//        });
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        parent= null;
     }
-    class MyAdapter extends BaseAdapter {
 
-        @Override
-        public int getCount() {
-            if(viewModel.getList().getValue()==null)
-            {
-                return 0;
+    static class RecipeViewHolder extends RecyclerView.ViewHolder{
+        TextView idTv;
+        TextView titleTv;
+        TextView locationTv;
+        TextView descriptionTv;
+        ImageView imageView;
+        Recipe recipe;
+
+        public RecipeViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+            super(itemView);
+            idTv = itemView.findViewById(R.id.row_id);
+            titleTv = itemView.findViewById(R.id.row_title_tv);
+            locationTv = itemView.findViewById(R.id.row_location_tv);
+            descriptionTv = itemView.findViewById(R.id.row_descroption_tv);
+            imageView = itemView.findViewById(R.id.row_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            listener.onClick(position);
+                        }
+                    }
+                }
+            });
+        }
+
+        void bind(Recipe recipe){
+            idTv.setText(recipe.id);
+            titleTv.setText(recipe.title);
+            locationTv.setText(recipe.location);
+            descriptionTv.setText(recipe.description);
+            if(recipe.avatar !=null && recipe.avatar!= "" ){
+                Picasso.get().load(recipe.avatar).placeholder(R.drawable.picture_food).into(imageView);
+            } else{
+                imageView.setImageResource(R.drawable.picture_food);
             }
-            return viewModel.getList().getValue().size();
+        }
+    }
+
+    interface OnItemClickListener{
+        void onClick(int position);
+    }
+
+    class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder>{
+        private OnItemClickListener listener;
+
+        void setOnItemClickListener(OnItemClickListener listener){
+            this.listener = listener;
+        }
+
+        @NonNull
+        @Override
+        // what happen when create a view of row
+        public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View view= LayoutInflater.from(getActivity()).inflate(R.layout.list_row, viewGroup, false);
+            RecipeViewHolder viewHolder = new RecipeViewHolder(view,listener);
+            return viewHolder;
+        }
+
+        //take a row and connect her data
+        @Override
+        public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
+           Recipe recipe = data.get(position);
+            holder.bind(recipe);
         }
 
         @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            if(view==null)
-            {
-                view=getLayoutInflater().inflate(R.layout.list_row,null);
-            }
-            TextView tv=view.findViewById(R.id.listRow_recipe1);
-            ImageView imv=view.findViewById(R.id.listrow_imageview);
-            Recipe re=viewModel.getList().getValue().get(i);
-            tv.setText(re.getName());
-            imv.setImageResource(R.drawable.picture_food);
-            if(re.getImageUrl()!=null)
-            {
-                Picasso.get().load(re.getImageUrl()).placeholder(R.drawable.picture_food).into(imv);
-            }
-            return view;
+        public int getItemCount() {
+            return data.size();
         }
     }
 }

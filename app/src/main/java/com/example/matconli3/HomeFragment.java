@@ -14,29 +14,15 @@ import android.widget.TextView;
 
 
 public class HomeFragment extends Fragment {
+    public HomeFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-            // Inflate the layout for this fragment
-            View view = inflater.inflate(R.layout.fragment_home, container, false);
-            Button regbtn=view.findViewById(R.id.btn_register);
-            regbtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Navigation.findNavController(v).navigate(R.id.action_home_to_register);
-
-                }
-            });
-            Button loginbtn=view.findViewById(R.id.btn_login);
-            loginbtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Navigation.findNavController(v).navigate(R.id.action_home_to_category);
-
-                }
-            });
-
-            return view;
-        }
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
+}

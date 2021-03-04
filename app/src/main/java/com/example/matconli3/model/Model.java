@@ -19,9 +19,6 @@ import java.util.List;
 public class Model {
     public final static Model instance = new Model();
     ModelFirebase modelFirebase=new ModelFirebase();
-    ModelSql modelSql=new ModelSql();
-//    private Model(){
-//    }
 
     public interface Listener<T>{
         void onComplete(T data);
@@ -32,11 +29,7 @@ public class Model {
     public Model(){
 
     }
-//
-//    public interface GetAllRecipesListener{
-//        void onComplete( List<Recipe> data);
-//    }
-//   MutableLiveData<List<Recipe>> recipeList;
+
 public LiveData<List<Recipe>> getAllRecipes(){
     LiveData<List<Recipe>> liveData = (LiveData<List<Recipe>>) AppLocalDb.db.recipeDao().getAllRecipes();
     refreshAllRecipes(null);
@@ -79,7 +72,7 @@ public LiveData<List<Recipe>> getAllRecipes(){
     public void updateRecipe(Recipe recipe,Listener<Boolean> listener) {
         modelFirebase.updateRecipe(recipe, (CompListener) listener);
 
-//        AppLocalDb.db.recommendDao().insertAll(recommend);
+
     }
 
 
@@ -87,7 +80,7 @@ public LiveData<List<Recipe>> getAllRecipes(){
     public void addRec(Recipe recipe,Listener<Boolean> listener) {
         modelFirebase.addRecipe(recipe,listener);
 
-//        AppLocalDb.db.recommendDao().insertAll(recommend);
+
     }
 
     public void deleteRecipe(Recipe recipe) {
@@ -114,45 +107,6 @@ public LiveData<List<Recipe>> getAllRecipes(){
         }.execute("");
     }
 
-//    public interface GetRecipeListener{
-//        void onComplete( Recipe recipe);
-//    }
-//    public void getRecipe(String id,GetRecipeListener listener)
-//    {
-//        modelFirebase.getRecipe(id, listener);
-//    }
-//
-//    public interface AddRecipeListener{
-//        void onComplete();
-//
-//    }
-//    public void addRecipe(Recipe recipe,AddRecipeListener listener){
-//
-//        modelFirebase.addRecipe(recipe,listener);
-//
-//    }
-//    public interface UpdateRecipeListener extends AddRecipeListener{
-//        void onComplete();
-//
-//    }
-//    public void updateRecipe(Recipe recipe,UpdateRecipeListener listener){
-//
-//        modelFirebase.updateRecipe(recipe,listener);
-//
-//    }
-//
-//
-//    interface DeleteListener extends AddRecipeListener{}
-//    public void deleteRecipe(Recipe recipe,DeleteListener listener){
-//
-//        modelFirebase.delete(recipe,listener);
-//
-//    }
-//    public interface UploadImageListener{
-//        public void onComplete(String url);
-//    }
-//    public  void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener){
-//        modelFirebase.uploadImage( imageBmp, name, listener);
-//    }
+
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,81 +8,110 @@
     tools:context=".AddFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <EditText
+        android:id="@+id/edit_rec_title"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/edit_rec_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/addRecipe_food_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/edit_rec_image"
+        android:layout_width="214dp"
+        android:layout_height="176dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/picture_food"
-        app:layout_constraintBottom_toTopOf="@+id/addRecipe__description"
-        app:layout_constraintDimensionRatio="3:2"
+        app:layout_constraintBottom_toTopOf="@+id/fail_to_save_recommend"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit_rec_takePhoto_btn"
+        app:layout_constraintTop_toBottomOf="@+id/edit_rec_description" />
+
+    <Button
+        android:id="@+id/edit_rec_takePhoto_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="123dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="200dp"
+        android:text="Take Photo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/edit_rec_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_rec_description" />
+
+    <EditText
+        android:id="@+id/edit_rec_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Location"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/edit_rec_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_rec_title" />
+
+    <EditText
+        android:id="@+id/edit_rec_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="36dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Description"
+        android:textAlignment="center"
+        android:textColor="#FFFCFC"
+        app:layout_constraintBottom_toTopOf="@+id/edit_rec_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_rec_location" />
+
+    <Button
+        android:id="@+id/edit_rec_save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="162dp"
+        android:layout_marginEnd="161dp"
+        android:layout_marginBottom="128dp"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fail_to_save_recommend" />
+
+    <TextView
+        android:id="@+id/fail_to_save_recommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="177dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginBottom="15dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/edit_rec_save_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/addRecipe_edit"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
-        android:background="#00C15D5D"
-        android:scaleType="fitXY"
-        android:src="@android:drawable/ic_menu_edit"
-        app:layout_constraintBottom_toBottomOf="@+id/addRecipe_food_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.86"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/addRecipe__description"
-        android:layout_width="127dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="16dp"
-        android:text="description"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.019"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addRecipe_food_icon" />
-
-    <EditText
-        android:id="@+id/addRecipe_description_edit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/addRecipe__description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addRecipe__description"
-        app:layout_constraintTop_toTopOf="@+id/addRecipe__description" />
-
-    <Button
-        android:id="@+id/addRecipe_back"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:text="Save"
-        app:layout_constraintEnd_toStartOf="@+id/addRecipe_cancel"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addRecipe__description" />
-
-    <Button
-        android:id="@+id/addRecipe_cancel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="Cancel"
-        app:layout_constraintBottom_toBottomOf="@+id/addRecipe_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/addRecipe_back"
-        app:layout_constraintTop_toTopOf="@+id/addRecipe_back" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_rec_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

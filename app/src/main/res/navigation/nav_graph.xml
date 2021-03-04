@@ -3,20 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragment_home">
-    <fragment
-        android:id="@+id/fragment_home"
-        android:name="com.example.matconli3.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_home_to_register"
-            app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_home_to_category"
-            app:destination="@id/categoryFragment"
-            app:popUpTo="@id/categoryFragment" />
-    </fragment>
+    app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.matconli3.RegisterFragment"
@@ -60,6 +47,16 @@
             app:popUpTo="@id/addFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/alertDialogFragment"
+        android:name="com.example.matconli3.AlertDialogFragment"
+        android:label="fragment_alert_dialog"
+        tools:layout="@layout/fragment_alert_dialog" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.matconli3.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
     <!--    <fragment-->
     <!--        android:id="@+id/recipeDetailsFragment"-->
     <!--        android:name="com.example.matconli3.RecipeDetailsFragment"-->
