@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.matconli3.model.AppLocalDb;
 import com.example.matconli3.model.Model;
 import com.example.matconli3.model.Recipe;
 import com.example.matconli3.model.StoreModel;
@@ -118,7 +119,7 @@ public class AddFragment extends Fragment {
         Date date = new Date();
         if (imageBitmap != null) {
 
-            StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
+            StoreModel.uploadImage(imageBitmap, "Recipe_photo" + date.getTime(), new StoreModel.Listener() {
                 @Override
                 public void onSuccess(final String url) {
                     Log.d("TAG", "url: " + url);
@@ -135,8 +136,8 @@ public class AddFragment extends Fragment {
                 @Override
                 public void onFail() {
 
-//                    Snackbar mySnackbar = Snackbar.make(view, R.string.fail_to_save_recommend, Snackbar.LENGTH_LONG);
-//                    mySnackbar.show();
+                    Snackbar mySnackbar = Snackbar.make(view, R.string.fail_to_save_recipe, Snackbar.LENGTH_LONG);
+                    mySnackbar.show();
                 }
             });
         }
@@ -178,15 +179,15 @@ public class AddFragment extends Fragment {
         NavController navController = Navigation.findNavController(view);
 
         switch (item.getItemId()){
-//            case R.id.login_now_button:
-//                Log.d("TAG","fragment handle login menu");
-//                navController.navigate(R.id.action_global_loginFragment);
-//                return true;
-//
-//            case R.id.logout_btn:
-//                Log.d("TAG","fragment handle logout menu");
-//                navController.navigate(R.id.action_global_recListFragment);
-//                return true;
+            case R.id.login_now_button:
+                Log.d("TAG","fragment handle login menu");
+                navController.navigate(R.id.action_global_loginFragment);
+                return true;
+
+            case R.id.logout_btn:
+                Log.d("TAG","fragment handle logout menu");
+                navController.navigate(R.id.action_global_recipeFragment);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

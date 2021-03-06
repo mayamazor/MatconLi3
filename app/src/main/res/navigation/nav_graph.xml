@@ -3,67 +3,201 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.example.matconli3.RecipeFragment"
+        android:label="Recipes"
+        tools:layout="@layout/fragment_recipe">
+        <action
+            android:id="@+id/action_recipeFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="com.example.matconli3.RecipeDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_recipe_details">
+        <argument
+            android:name="recipe"
+            app:argType="com.example.matconli3.model.Recipe" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_recipeDetailsFragment"
+        app:destination="@id/recipeDetailsFragment" />
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.example.matconli3.AddFragment"
+        android:label="Add"
+        tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.matconli3.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+    <action
+        android:id="@+id/action_global_addFragment"
+        app:destination="@id/addFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.matconli3.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.matconli3.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register">
         <action
-            android:id="@+id/action_registerFragment_pop"
-            app:popUpTo="@id/fragment_home"
-            app:popUpToInclusive="false" />
-    </fragment>
-    <fragment
-        android:id="@+id/categoryFragment"
-        android:name="com.example.matconli3.CategoryFragment"
-        android:label="fragment_category"
-        tools:layout="@layout/fragment_category">
-        <action
-            android:id="@+id/action_category_to_recipe"
-            app:destination="@id/recipeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/recipeFragment"
-        android:name="com.example.matconli3.RecipeFragment"
-        android:label="fragment_recipe"
-        tools:layout="@layout/fragment_recipe">
-        <action
-            android:id="@+id/action_recipe_to_add"
-            app:destination="@id/addFragment"
-            app:popUpTo="@id/addFragment" />
-        <!--        <action-->
-        <!--            android:id="@+id/action_recipe_to_recipeDetails"-->
-        <!--            app:destination="@id/recipeDetailsFragment" />-->
-    </fragment>
-    <fragment
-        android:id="@+id/addFragment"
-        android:name="com.example.matconli3.AddFragment"
-        android:label="fragment_add"
-        tools:layout="@layout/fragment_add">
-        <action
-            android:id="@+id/action_add_to_recipe"
+            android:id="@+id/action_registerFragment_to_recipeFragment"
             app:destination="@id/recipeFragment"
-            app:popUpTo="@id/addFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/recipeFragment" />
     </fragment>
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment" />
+    <action
+        android:id="@+id/action_global_registerFragment"
+        app:destination="@id/registerFragment" />
+    <action
+        android:id="@+id/action_global_recipeFragment"
+        app:destination="@id/recipeFragment" />
     <fragment
-        android:id="@+id/alertDialogFragment"
-        android:name="com.example.matconli3.AlertDialogFragment"
-        android:label="fragment_alert_dialog"
-        tools:layout="@layout/fragment_alert_dialog" />
+        android:id="@+id/recipeEditFragment"
+        android:name="com.example.matconli3.RecipeEditFragment"
+        android:label="RecipeEditFragment">
+        <argument
+            android:name="recipe"
+            app:argType="com.example.matconli3.model.Recipe" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_recipeEditFragment"
+        app:destination="@id/recipeEditFragment" />
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment" />
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.matconli3.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <!--    <fragment-->
-    <!--        android:id="@+id/recipeDetailsFragment"-->
-    <!--        android:name="com.example.matconli3.RecipeDetailsFragment"-->
-    <!--        android:label="fragment_recipe_details"-->
-    <!--        tools:layout="@layout/fragment_recipe_details">-->
-    <!--        <argument-->
-    <!--            android:name="recipeName"-->
-    <!--            app:argType="string" />-->
-    <!--    </fragment>-->
+        android:id="@+id/aboutFragment"
+        android:name="com.example.matconli3.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <action
+        android:id="@+id/action_global_aboutFragment"
+        app:destination="@id/aboutFragment" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.matconli3.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--&lt;!&ndash;<navigation xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
+    <!--&lt;!&ndash;    xmlns:app="http://schemas.android.com/apk/res-auto"&ndash;&gt;-->
+    <!--&lt;!&ndash;    xmlns:tools="http://schemas.android.com/tools"&ndash;&gt;-->
+    <!--&lt;!&ndash;    android:id="@+id/nav_graph"&ndash;&gt;-->
+    <!--&lt;!&ndash;    app:startDestination="@id/homeFragment">&ndash;&gt;-->
+    <!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/registerFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:name="com.example.matconli3.RegisterFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:label="fragment_register"&ndash;&gt;-->
+    <!--&lt;!&ndash;        tools:layout="@layout/fragment_register">&ndash;&gt;-->
+    <!--&lt;!&ndash;        <action&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:id="@+id/action_registerFragment_pop"&ndash;&gt;-->
+    <!--&lt;!&ndash;            app:popUpTo="@id/fragment_home"&ndash;&gt;-->
+    <!--&lt;!&ndash;            app:popUpToInclusive="false" />&ndash;&gt;-->
+    <!--&lt;!&ndash;    </fragment>&ndash;&gt;-->
+    <!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/categoryFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:name="com.example.matconli3.CategoryFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:label="fragment_category"&ndash;&gt;-->
+    <!--&lt;!&ndash;        tools:layout="@layout/fragment_category">&ndash;&gt;-->
+    <!--&lt;!&ndash;        <action&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:id="@+id/action_category_to_recipe"&ndash;&gt;-->
+    <!--&lt;!&ndash;            app:destination="@id/recipeFragment" />&ndash;&gt;-->
+    <!--&lt;!&ndash;    </fragment>&ndash;&gt;-->
+    <!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/recipeFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:name="com.example.matconli3.RecipeFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:label="fragment_recipe"&ndash;&gt;-->
+    <!--&lt;!&ndash;        tools:layout="@layout/fragment_recipe">&ndash;&gt;-->
+    <!--&lt;!&ndash;        <action&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:id="@+id/action_recipe_to_add"&ndash;&gt;-->
+    <!--&lt;!&ndash;            app:destination="@id/addFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;            app:popUpTo="@id/addFragment" />&ndash;&gt;-->
+    <!--&lt;!&ndash;        &lt;!&ndash;        <action&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;        &lt;!&ndash;            android:id="@+id/action_recipe_to_recipeDetails"&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;        &lt;!&ndash;            app:destination="@id/recipeDetailsFragment" />&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;    </fragment>&ndash;&gt;-->
+    <!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/addFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:name="com.example.matconli3.AddFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:label="fragment_add"&ndash;&gt;-->
+    <!--&lt;!&ndash;        tools:layout="@layout/fragment_add">&ndash;&gt;-->
+    <!--&lt;!&ndash;        <action&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:id="@+id/action_add_to_recipe"&ndash;&gt;-->
+    <!--&lt;!&ndash;            app:destination="@id/recipeFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;            app:popUpTo="@id/addFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;            app:popUpToInclusive="true" />&ndash;&gt;-->
+    <!--&lt;!&ndash;    </fragment>&ndash;&gt;-->
+    <!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/alertDialogFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:name="com.example.matconli3.AlertDialogFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:label="fragment_alert_dialog"&ndash;&gt;-->
+    <!--&lt;!&ndash;        tools:layout="@layout/fragment_alert_dialog" />&ndash;&gt;-->
+    <!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/homeFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:name="com.example.matconli3.HomeFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:label="fragment_home"&ndash;&gt;-->
+    <!--&lt;!&ndash;        tools:layout="@layout/fragment_home" />&ndash;&gt;-->
+    <!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/aboutFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:name="com.example.matconli3.AboutFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:label="fragment_about"&ndash;&gt;-->
+    <!--&lt;!&ndash;        tools:layout="@layout/fragment_about" />&ndash;&gt;-->
+    <!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/dateFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:name="com.example.matconli3.DateFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:label="fragment_date"&ndash;&gt;-->
+    <!--&lt;!&ndash;        tools:layout="@layout/fragment_date" />&ndash;&gt;-->
+    <!--&lt;!&ndash;    <fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/profileFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:name="com.example.matconli3.ProfileFragment"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:label="fragment_profile"&ndash;&gt;-->
+    <!--&lt;!&ndash;        tools:layout="@layout/fragment_profile" />&ndash;&gt;-->
+    <!--&lt;!&ndash;    &lt;!&ndash;    <fragment&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;    &lt;!&ndash;        android:id="@+id/recipeDetailsFragment"&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;    &lt;!&ndash;        android:name="com.example.matconli3.RecipeDetailsFragment"&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;    &lt;!&ndash;        android:label="fragment_recipe_details"&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;    &lt;!&ndash;        tools:layout="@layout/fragment_recipe_details">&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;    &lt;!&ndash;        <argument&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;    &lt;!&ndash;            android:name="recipeName"&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;    &lt;!&ndash;            app:argType="string" />&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;    &lt;!&ndash;    </fragment>&ndash;&gt;&ndash;&gt;-->
+    <!--</navigation>-->

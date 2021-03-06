@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements RecipeFragment.De
     @Override
     public void onItemSelected(Recipe recipe) {
         NavController navCtrl = Navigation.findNavController(this, R.id.home_nav_host);
-//        NavGraphDirections.ActionGlobalRecipeDetailsFragment directions = RecipeFragmentDirections.actionGlobalRecipeDetailsFragment(recipe);
-//        navCtrl.navigate(directions);
+        NavGraphDirections.ActionGlobalRecipeDetailsFragment directions = RecipeFragmentDirections.actionGlobalRecipeDetailsFragment(recipe);
+        navCtrl.navigate(directions);
     }
 
 
@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity implements RecipeFragment.De
         super.onCreateOptionsMenu(menu);
         FirebaseAuth fauth = FirebaseAuth.getInstance();
 
-//        if (fauth.getCurrentUser() != null) {
-//            getMenuInflater().inflate(R.menu.logut_menu, menu);
-//        } else {
-//            getMenuInflater().inflate(R.menu.recommends_list_menu, menu);      ///// change
-//        }
+        if (fauth.getCurrentUser() != null) {
+            getMenuInflater().inflate(R.menu.logut_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.recipes_list_menu, menu);      ///// change
+        }
         return true;
     }
 
@@ -74,21 +74,21 @@ public class MainActivity extends AppCompatActivity implements RecipeFragment.De
 
         switch (item.getItemId()) {
 
-//            case R.id.login_now_button:
-//                Log.d("TAG", "fragment handle login menu");
-//                navCtrl.navigate(R.id.action_global_loginFragment);
-//                return true;
-//
-//            case R.id.logout_btn:
-//                Log.d("TAG", "fragment handle logout menu");
-//                UserFirebase.logout();
-//                navCtrl.navigate(R.id.action_global_recListFragment);
-//                return true;
-//
-//            case R.id.Add_button_menu:
-//                Log.d("TAG", "fragment handle add menu");
-//                navCtrl.navigate(R.id.addFragment);
-//                return true;
+            case R.id.login_now_button:
+                Log.d("TAG", "fragment handle login menu");
+                navCtrl.navigate(R.id.action_global_loginFragment);
+                return true;
+
+            case R.id.logout_btn:
+                Log.d("TAG", "fragment handle logout menu");
+                UserFirebase.logout();
+                navCtrl.navigate(R.id.action_global_recipeFragment);
+                return true;
+
+            case R.id.Add_button_menu:
+                Log.d("TAG", "fragment handle add menu");
+                navCtrl.navigate(R.id.addFragment);
+                return true;
 
         }
         if (item.getItemId() == android.R.id.home) {

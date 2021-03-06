@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--    android:background="@drawable/e258d758045e3e2f5fc6270f4592ec08112">-->
+
+    <item
+        android:id="@id/recipeFragment"
+        android:title="Home" />
+    <item
+        android:id="@+id/addRecFragment"
+        android:title="Add" />
+    <item
+        android:id="@id/profileFragment"
+        android:title="Profile" />
+</menu>

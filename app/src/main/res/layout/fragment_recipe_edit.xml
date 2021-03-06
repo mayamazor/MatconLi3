@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,69 +11,54 @@
         android:id="@+id/edit_rec_title"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginTop="111dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="28dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Title"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/edit_rec_location"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/new_title"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/edit_rec_image"
         android:layout_width="231dp"
         android:layout_height="234dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="112dp"
         android:src="@drawable/picture_food"
-        app:layout_constraintBottom_toTopOf="@+id/fail_to_save_recommend"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edit_rec_takePhoto_btn"
-        app:layout_constraintTop_toBottomOf="@+id/edit_rec_description" />
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/edit_rec_takePhoto_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="127dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="249dp"
+        android:layout_marginBottom="288dp"
         android:text="Take Photo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/edit_rec_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_description" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/new_title"
         android:layout_width="72dp"
         android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="49dp"
+        android:layout_marginStart="12dp"
         android:defaultValue="@null"
         android:text="Title:"
         android:textColor="#FAFAFA"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/new_location"
-        app:layout_constraintEnd_toStartOf="@+id/edit_rec_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.443" />
 
     <TextView
         android:id="@+id/new_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginEnd="43dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="56dp"
         android:defaultValue="@null"
         android:text="Location:"
         android:textColor="#FFFFFF"
@@ -82,83 +66,66 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/new_description"
         app:layout_constraintEnd_toStartOf="@+id/edit_rec_location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_title" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/new_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="64dp"
         android:defaultValue="@null"
         android:text="description"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/edit_rec_takePhoto_btn"
-        app:layout_constraintEnd_toStartOf="@+id/edit_rec_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_location" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edit_rec_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Location"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/edit_rec_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/new_location"
-        app:layout_constraintTop_toBottomOf="@+id/edit_rec_title" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/edit_rec_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="52dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Description"
         android:textColor="#FFFCFC"
         app:layout_constraintBottom_toTopOf="@+id/edit_rec_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/new_description"
-        app:layout_constraintTop_toBottomOf="@+id/edit_rec_location" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/edit_rec_save_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="40dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fail_to_save_recommend" />
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/fail_to_save_recommend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="177dp"
-        android:layout_marginBottom="14dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edit_rec_save_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_rec_image" />
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="472dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

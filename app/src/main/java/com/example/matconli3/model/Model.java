@@ -35,7 +35,7 @@ public LiveData<List<Recipe>> getAllRecipes(){
     refreshAllRecipes(null);
     return liveData;
 }
-    public LiveData<List<Recipe>> getUserRecommends(User currentUser) {
+    public LiveData<List<Recipe>> getUserRecipes(User currentUser) {
         return AppLocalDb.db.recipeDao().getUserRecipes(currentUser.id);
     }
 

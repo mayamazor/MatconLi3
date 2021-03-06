@@ -10,7 +10,7 @@ public class RecipeDetailsViewModel {
         return UserModel.instance.getCurrentUser();
     }
 
-    public void deleteRecommend(Recipe recipe) {
+    public void deleteRecipe(Recipe recipe) {
        Model.instance.deleteRecipe(recipe);
     }
 }

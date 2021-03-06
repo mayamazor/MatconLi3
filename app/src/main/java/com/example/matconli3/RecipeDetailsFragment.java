@@ -45,7 +45,7 @@ public class RecipeDetailsFragment extends Fragment {
             description = view.findViewById(R.id.rec_details_description);
             imageUrl = view.findViewById(R.id.rec_details_image);
 
-//            recipe = RecipeDetailsFragmentArgs.fromBundle(getArguments()).getRecipe();
+            recipe = RecipeDetailsFragmentArgs.fromBundle(getArguments()).getRecipe();
             if (recipe != null) {
                 update_display();
             }
@@ -64,8 +64,8 @@ public class RecipeDetailsFragment extends Fragment {
                     fire.deleteRecipe(recipe.id);
                     Log.d("TAG", "delete clicked");
                     NavController navController = Navigation.findNavController(view);
-//                    NavDirections updatedDirections = RecipeDetailsFragmentDirections.actionGlobalProfileFragment();
-//                    navController.navigate(updatedDirections);
+                    NavDirections updatedDirections = RecipeDetailsFragmentDirections.actionGlobalProfileFragment();
+                    navController.navigate(updatedDirections);
 
 
                 }
@@ -76,8 +76,9 @@ public class RecipeDetailsFragment extends Fragment {
                 public void onClick(View v) {
                     Log.d("TAG", "edit recipe");
                     NavController navController = Navigation.findNavController(view);
-//                    NavDirections updatedDirections = RecipeDetailsFragmentDirections.actionGlobalRecipeEditFragment(recipe);
-//                    navController.navigate(updatedDirections);
+                    NavDirections updatedDirections = RecipeDetailsFragmentDirections.actionGlobalRecipeEditFragment(recipe);
+                  navController.navigate(updatedDirections);
+
                 }
             });
 

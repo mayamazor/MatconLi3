@@ -27,7 +27,7 @@
         android:layout_marginTop="12dp"
         android:text="post_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#FFFFFF"
+        android:textColor="#0B0A0A"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
         android:text="description"
-        android:textColor="#FFFFFF"
+        android:textColor="#191818"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/row_location_tv" />
 
@@ -51,7 +51,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="15dp"
         android:text="location"
-        android:textColor="#F3EEEE"
+        android:textColor="#0E0E0E"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/row_title_tv" />
 

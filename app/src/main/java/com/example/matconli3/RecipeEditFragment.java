@@ -60,7 +60,7 @@ public class RecipeEditFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view =  inflater.inflate(R.layout.fragment_recipe_edit, container, false);
-//        recipe = RecipeEditFragmentArgs.fromBundle(getArguments()).getRecommend();
+        recipe = RecipeEditFragmentArgs.fromBundle(getArguments()).getRecipe();
 
 
         Button takePhotoBtn = view.findViewById(R.id.edit_rec_takePhoto_btn);
@@ -69,6 +69,8 @@ public class RecipeEditFragment extends Fragment {
             public void onClick(View v) {
                 takePhoto();
                 take=true;
+
+
             }
         });
         titleTV = view.findViewById(R.id.edit_rec_title);
@@ -97,17 +99,13 @@ public class RecipeEditFragment extends Fragment {
         final String title= titleTV.getText().toString();
         final String location= locationTv.getText().toString();
         final String description= descriptionTV.getText().toString();
-
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final String userId = auth.getCurrentUser().getUid();
 
-
         Date date = new Date();
 
-
         if(take) {
-            StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
+            StoreModel.uploadImage(imageBitmap, "Recipe_photo" + date.getTime(), new StoreModel.Listener() {
                 @Override
                 public void onSuccess(final String url) {
                     Log.d("TAG", "url: " + url);
@@ -116,26 +114,24 @@ public class RecipeEditFragment extends Fragment {
                     if (!recipe.id.isEmpty()) {
                         newRecipe.setId(recipe.id);
                     }
-
                     fire.updateRecipe(newRecipe, new Model.CompListener() {
                         @Override
                         public void onComplete() {
                             NavController navController = Navigation.findNavController(view);
 
-//                            if (!recipe.id.isEmpty())
-//                                navController.navigate(R.id.profileFragment);
-//                            else
-//                                navController.navigateUp();
+                            if (!recipe.id.isEmpty())
+                                navController.navigate(R.id.profileFragment);
+                            else
+                                navController.navigateUp();
                         }
-
                     });
                 }
 
                 @Override
                 public void onFail() {
 
-//                    Snackbar mySnackbar = Snackbar.make(view, R.string.fail_to_save_recommend, Snackbar.LENGTH_LONG);
-//                    mySnackbar.show();
+                    Snackbar mySnackbar = Snackbar.make(view, R.string.fail_to_save_recipe, Snackbar.LENGTH_LONG);
+                    mySnackbar.show();
                 }
             });
         }
@@ -151,10 +147,10 @@ public class RecipeEditFragment extends Fragment {
                 public void onComplete() {
                     NavController navController = Navigation.findNavController(view);
 
-//                    if (!recipe.id.isEmpty())
-//                        navController.navigate(R.id.profileFragment);
-//                    else
-//                        navController.navigateUp();
+                    if (!recipe.id.isEmpty())
+                        navController.navigate(R.id.profileFragment);
+                    else
+                        navController.navigateUp();
                 }
 
             });
@@ -170,6 +166,7 @@ public class RecipeEditFragment extends Fragment {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
         }
     }
     @Override
@@ -192,15 +189,15 @@ public class RecipeEditFragment extends Fragment {
         NavController navController = Navigation.findNavController(view);
 
         switch (item.getItemId()){
-//            case R.id.login_now_button:
-//                Log.d("TAG","fragment handle login menu");
-//                navController.navigate(R.id.action_global_loginFragment);
-//                return true;
-//
-//            case R.id.logout_btn:
-//                Log.d("TAG","fragment handle logout menu");
-//                navController.navigate(R.id.action_global_recListFragment);
-//                return true;
+            case R.id.login_now_button:
+                Log.d("TAG","fragment handle login menu");
+                navController.navigate(R.id.action_global_loginFragment);
+                return true;
+
+            case R.id.logout_btn:
+                Log.d("TAG","fragment handle logout menu");
+                navController.navigate(R.id.action_global_recipeFragment);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

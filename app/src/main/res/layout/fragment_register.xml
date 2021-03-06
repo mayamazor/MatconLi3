@@ -14,7 +14,7 @@
         android:layout_marginStart="136dp"
         android:layout_marginTop="84dp"
         android:text="Register"
-        android:textColor="#FFFFFF"
+        android:textColor="#0E0E0E"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="70dp"
         android:text="Name:"
-        android:textColor="#FFFFFF"
+        android:textColor="#121111"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_title" />
@@ -39,7 +39,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="70dp"
         android:text="Email:"
-        android:textColor="#FFFFFF"
+        android:textColor="#070707"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_user_name_label" />
@@ -51,7 +51,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="70dp"
         android:text="Password:"
-        android:textColor="#FFFFFF"
+        android:textColor="#121212"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_user_email_label" />
@@ -64,7 +64,7 @@
         android:layout_marginTop="70dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
+        android:textColor="#121111"
         app:layout_constraintStart_toEndOf="@+id/register_user_name_label"
         app:layout_constraintTop_toBottomOf="@+id/register_title" />
 
@@ -76,7 +76,7 @@
         android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
+        android:textColor="#121111"
         app:layout_constraintStart_toEndOf="@+id/register_user_email_label"
         app:layout_constraintTop_toBottomOf="@+id/register_user_name" />
 
@@ -88,7 +88,7 @@
         android:layout_marginTop="45dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:textColor="#FFFFFF"
+        android:textColor="#0C0C0C"
         app:layout_constraintStart_toEndOf="@+id/register_user_password_label"
         app:layout_constraintTop_toBottomOf="@+id/register_user_email" />
 

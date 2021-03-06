@@ -78,8 +78,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavController navController = Navigation.findNavController(view);
-//                NavDirections directions = LoginFragmentDirections.actionGlobalRegisterFragment();
-//                navController.navigate(directions);
+                NavDirections directions = LoginFragmentDirections.actionGlobalRegisterFragment();
+                navController.navigate(directions);
             }
         });
         return view;
