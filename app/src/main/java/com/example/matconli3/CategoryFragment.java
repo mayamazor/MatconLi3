@@ -20,13 +20,13 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         ImageButton catbtn=view.findViewById(R.id.btn_category1);
-//        catbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.action_category_to_recipe);
-//
-//            }
-//        });
+        catbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(R.id.a);
+
+            }
+        });
 
         return view;
     }

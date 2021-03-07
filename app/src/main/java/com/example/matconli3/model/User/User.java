@@ -8,14 +8,27 @@ import java.io.Serializable;
 
 @Entity
 public class User implements Serializable {
+
+    private static User MyUser = null;
     @PrimaryKey
     @NonNull
     public String id = "";
     public String name = "";
     public String email = "";
     long lastUpdated;
+    public String passsord;
+    public String address;
+    public String profileImageUrl;
 
-    public User() {
+
+    private User()
+    {
+        email = null;
+        name = null;
+        profileImageUrl = null;
+        passsord = null;
+        address = null;
+        id = null;
     }
 
     public User(String name, String email) {
@@ -28,7 +41,13 @@ public class User implements Serializable {
         this.name = name;
         this.email = email;
     }
+    public static User getInstance()
+    {
+        if (MyUser == null)
+            MyUser = new User();
 
+        return MyUser;
+    }
     public void setId(@NonNull String id) {
         this.id = id;
     }

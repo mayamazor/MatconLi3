@@ -33,6 +33,8 @@ public class LoginFragment extends Fragment {
 
     private LoginViewModel mViewModel;
 
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_login, container, false);
@@ -52,26 +54,36 @@ public class LoginFragment extends Fragment {
                     password.setError("password is Require");
                     return;
                 }
-
                 if(password.length() < 6)
                 {
                     password.setError("Password must be more than 6 characters");
                 }
-
                 mViewModel.login(email.getText().toString(), password.getText().toString(), new UserModel.Listener<Boolean>() {
                     @Override
                     public void onComplete(Boolean data) {
                         if (data) {
                             view.findViewById(R.id.login_error_msg).setVisibility(View.INVISIBLE);
                             NavController navController = Navigation.findNavController(view);
+//                             // added
+//
+//                            Navigation.findNavController(buttonView).navigate(R.id.action_login_to_category);
+//
+//                            //added
                             navController.navigateUp();
+
+
                         } else {
                             view.findViewById(R.id.login_error_msg).setVisibility(View.VISIBLE);
                         }
                     }
                 });
+
             }
         });
+        // added
+        Button login=view.findViewById(R.id.login_now_button);
+        login.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_login_to_category));
+        // added
 
         View navigateToRegistrationButton = view.findViewById(R.id.login_navigate_to_registration_button);
         navigateToRegistrationButton.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +92,7 @@ public class LoginFragment extends Fragment {
                 NavController navController = Navigation.findNavController(view);
                 NavDirections directions = LoginFragmentDirections.actionGlobalRegisterFragment();
                 navController.navigate(directions);
+
             }
         });
         return view;

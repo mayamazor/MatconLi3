@@ -1,18 +1,25 @@
 package com.example.matconli3.model;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import static android.content.Context.MODE_PRIVATE;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.matconli3.MyApplication;
 import com.example.matconli3.model.User.User;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -35,12 +42,24 @@ public LiveData<List<Recipe>> getAllRecipes(){
     refreshAllRecipes(null);
     return liveData;
 }
-    public LiveData<List<Recipe>> getUserRecipes(User currentUser) {
-        return AppLocalDb.db.recipeDao().getUserRecipes(currentUser.id);
+
+    public Recipe getRecipeById(String recipeId) {
+        Recipe recipe = AppLocalDb.db.RecipesDao().GetRecipeById(recipeId);
+        refreshAllRecipes(null);
+        return recipe;
+    }
+//    public LiveData<List<Recipe>> getUserRecipes(User currentUser) {
+//        return AppLocalDb.db.recipeDao().getUserRecipes(currentUser.id);
+//    }
+
+    public LiveData<List<Recipe>> getAllRecipesPerUser(String userId) {
+        LiveData<List<Recipe>> liveData = AppLocalDb.db.RecipesDao().getAllRecipesPerUser(userId);
+        refreshAllRecipes(null);
+        return liveData;
     }
 
     public void refreshAllRecipes(final CompListener listener){
-        long lastUpdated = MyApplication.context.getSharedPreferences("TAG",MODE_PRIVATE).getLong("RecipesLastUpdateDate",0);
+        long lastUpdated = MyApplication.context.getSharedPreferences("TAG",Context.MODE_PRIVATE).getLong("RecipesLastUpdateDate",0);
 
         ModelFirebase.getAllRecipesSince(lastUpdated,new Listener<List<Recipe>>() {
             @SuppressLint("StaticFieldLeak")
@@ -54,7 +73,7 @@ public LiveData<List<Recipe>> getAllRecipes(){
                             AppLocalDb.db.recipeDao().insertAll(recipe);
                             if (recipe.lastUpdated > lastUpdated) lastUpdated = recipe.lastUpdated;
                         }
-                        SharedPreferences.Editor edit = MyApplication.context.getSharedPreferences("TAG", MODE_PRIVATE).edit();
+                        SharedPreferences.Editor edit = MyApplication.context.getSharedPreferences("TAG",Context.MODE_PRIVATE).edit();
                         edit.putLong("RecipesLastUpdateDate",lastUpdated);
                         edit.commit();
                         return "";
@@ -62,6 +81,7 @@ public LiveData<List<Recipe>> getAllRecipes(){
                     @Override
                     protected void onPostExecute(String s) {
                         super.onPostExecute(s);
+                        cleanLocalDb();
                         if (listener!=null)  listener.onComplete();
                     }
                 }.execute("");
@@ -69,22 +89,57 @@ public LiveData<List<Recipe>> getAllRecipes(){
         });
     }
 
-    public void updateRecipe(Recipe recipe,Listener<Boolean> listener) {
-        modelFirebase.updateRecipe(recipe, (CompListener) listener);
-
-
+    @SuppressLint("StaticFieldLeak")
+    private void cleanLocalDb() {
+        ModelFirebase.getDeletedRecipesId(new Listener<List<String>>() {
+            @Override
+            public void onComplete(final List<String> data) {
+                new AsyncTask<String, String, String>() {
+                    @Override
+                    protected String doInBackground(String... strings) {
+                        for (String id : data) {
+                            Log.d("TAG", "deleted id: " + id);
+                            AppLocalDb.db.RecipesDao().deleteByRecipeId(id);
+                        }
+                        return "";
+                    }
+                }.execute("");
+            }
+        });
+    }
+//    public void updateRecipe(Recipe recipe,Listener<Boolean> listener) {
+//        modelFirebase.updateRecipe(recipe, (CompListener) listener);
+//
+//
+//    }
+    public void updateUserProfile(String username, String profileImgUrl, Listener<Boolean> listener) {
+        ModelFirebase.updateUserProfile(username, profileImgUrl, listener);
     }
 
-
-
-    public void addRec(Recipe recipe,Listener<Boolean> listener) {
+    @SuppressLint("StaticFieldLeak")
+    public void addRec(final Recipe recipe,Listener<Boolean> listener) {
         modelFirebase.addRecipe(recipe,listener);
-
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                AppLocalDb.db.RecipesDao().insertAllRecipes(recipe);
+                return "";
+            }
+        }.execute();
 
     }
 
-    public void deleteRecipe(Recipe recipe) {
+
+    public void deleteRecipe(final Recipe recipe,Listener<Boolean> listener) {
+
         modelFirebase.deleteRecipe(recipe.id);
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                AppLocalDb.db.RecipesDao().deleteRecipe(recipe);
+                return "";
+            }
+        }.execute();
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -107,6 +162,20 @@ public LiveData<List<Recipe>> getAllRecipes(){
         }.execute("");
     }
 
+    public void setUserAppData(String email) {
+        ModelFirebase.setUserAppData(email);
+    }
 
+    public LatLng getLocation() {
+        if (ActivityCompat.checkSelfPermission(MyApplication.context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MyApplication.context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return new LatLng(0, 0);
+        }
+
+
+        LocationManager locationManager = (LocationManager) MyApplication.context.getSystemService(Context.LOCATION_SERVICE);
+        String provider = locationManager.getBestProvider(new Criteria(), true);
+        Location location = locationManager.getLastKnownLocation(provider);
+        return new LatLng(location.getLatitude(), location.getLongitude());
+    }
 
 }

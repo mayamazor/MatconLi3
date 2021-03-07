@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EACBCB"
+    tools:context=".fragments.EditProfileFragment">
+
+    <EditText
+        android:id="@+id/editProfile_fragment_username_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="268dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="124dp"
+        android:ems="10"
+        android:fontFamily="@font/aclonica"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_profile_fragment_save_changes_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/register_activity_user_icon2"
+        android:layout_width="61dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="268dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="46dp"
+        app:layout_constraintBottom_toTopOf="@+id/register_activity_email_icon"
+        app:layout_constraintEnd_toStartOf="@+id/register_activity_username_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_user_name" />
+
+    <TextView
+        android:id="@+id/edit_profile_add_img_activity_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="139dp"
+        android:layout_marginBottom="70dp"
+        android:fontFamily="@font/aclonica"
+        android:text="Edit Photo"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/editProfile_fragment_username_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/edit_fragment_add_img_icon_activity_imageView"
+        android:layout_width="139dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="133dp"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/ic_add_photo_color"
+        app:layout_constraintBottom_toTopOf="@+id/edit_profile_add_img_activity_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/edit_profile_fragment_save_changes_btn"
+        android:layout_width="234dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="124dp"
+        android:text="save changes"
+        app:backgroundTint="#953E5C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.418"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editProfile_fragment_username_edit_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

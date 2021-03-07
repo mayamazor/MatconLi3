@@ -60,10 +60,7 @@ public class RegisterFragment extends Fragment {
 
                 if(!TextUtils.isEmpty(email.getText()) && Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches())
                 {
-                    mViewModel.register(
-                            email.getText().toString(),
-                            password.getText().toString(),
-                            name.getText().toString(),
+                    mViewModel.register(email.getText().toString(), password.getText().toString(), name.getText().toString(),
                             new UserModel.Listener<Boolean>() {
                                 @Override
                                 public void onComplete(Boolean data) {
@@ -72,6 +69,9 @@ public class RegisterFragment extends Fragment {
                                         navController.navigateUp();
 
                                         navController.navigateUp();
+
+
+
                                     }
                                 }
                             });

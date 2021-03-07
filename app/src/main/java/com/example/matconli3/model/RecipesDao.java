@@ -15,12 +15,27 @@ public interface RecipesDao {
     @Query("select * from Recipe")
     LiveData<List<Recipe>> getAllRecipes();
 
-    @Query("select * from Recipe where ownerId = :userId")
+    @Query("select * from Recipe where categoryId = :categoryId")
+    LiveData<List<Recipe>> getAllRecipesPerCategory(String categoryId);
+
+    @Query("select * from Recipe where userId = :userId")
     LiveData<List<Recipe>> getUserRecipes(String userId);
+
+    @Query("select * from Recipe where id = :recipeId")
+    Recipe GetRecipeById(String recipeId);
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Recipe... recipe);
     @Delete
     void delete(Recipe recipe);
+
+    @Query("select exists(select * from Recipe where id = :recipeId)")
+    boolean isRecipeExists(String recipeId);
+
+    @Query("delete from Recipe where id = :recipeId")
+    void deleteByRecipeId(String recipeId);
+
+
 
 }
