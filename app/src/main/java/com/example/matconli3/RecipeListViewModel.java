@@ -23,7 +23,14 @@ public class RecipeListViewModel extends ViewModel {
         return liveData;
     }
 
+
     public void refresh(Model.CompListener listener) {
         Model.instance.refreshAllRecipes(listener);
+    }
+
+    public LiveData<List<Recipe>> getDataByCategory(String categoryId){
+        if (liveData == null)
+            liveData = Model.instance.getAllRecipesPerCategory(categoryId);
+        return liveData;
     }
 }

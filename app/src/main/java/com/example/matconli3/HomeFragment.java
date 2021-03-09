@@ -8,10 +8,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 
 public class HomeFragment extends Fragment {
@@ -20,12 +17,12 @@ public class HomeFragment extends Fragment {
     }
 
 
-    ImageView appetizers;
-    ImageView mains;
+    ImageView pasta;
+    ImageView pizza;
     ImageView salads;
-    ImageView healthy_food;
-    ImageView cookies;
+    ImageView meat;
     ImageView desserts;
+    //ImageView desserts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,25 +31,25 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        appetizers = view.findViewById(R.id.main_fragment_appetizers_image_view);
-        mains = view.findViewById(R.id.main_fragment_mains_image_view);
+        pasta = view.findViewById(R.id.main_fragment_pasta_image_view);
+        pizza = view.findViewById(R.id.main_fragment_pizza_image_view);
         salads = view.findViewById(R.id.main_fragment_salads_image_view);
-        healthy_food = view.findViewById(R.id.main_fragment_healthy_food_image_view);
-        cookies = view.findViewById(R.id.main_fragment_cookies_image_view);
-        desserts = view.findViewById(R.id.main_fragment_deserts_image_view);
+        meat = view.findViewById(R.id.main_fragment_meat_image_view);
+        desserts = view.findViewById(R.id.main_fragment_dessert_image_view);
+      //  desserts = view.findViewById(R.id.main_fragment_deserts_image_view);
 
-        appetizers.setOnClickListener(new View.OnClickListener() {
+        pasta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainFragmentDirections.ActionCategoryToRecList action = MainFragmentDirections.actionCategoryToRecList("Appetizers");
+                HomeFragmentDirections.ActionCategoryToRecipesList action = HomeFragmentDirections.actionCategoryToRecipesList("Pasta");
                 Navigation.findNavController(view).navigate(action);
             }
         });
 
-        mains.setOnClickListener(new View.OnClickListener() {
+        pizza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainFragmentDirections.ActionCategoryToRecList action = MainFragmentDirections.actionCategoryToRecList("Mains");
+                HomeFragmentDirections.ActionCategoryToRecipesList action = HomeFragmentDirections.actionCategoryToRecipesList("Pizza");
                 Navigation.findNavController(view).navigate(action);
             }
         });
@@ -60,23 +57,15 @@ public class HomeFragment extends Fragment {
         salads.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainFragmentDirections.ActionCategoryToRecList action = MainFragmentDirections.actionCategoryToRecList("Salads");
+                HomeFragmentDirections.ActionCategoryToRecipesList action = HomeFragmentDirections.actionCategoryToRecipesList("Salads");
                 Navigation.findNavController(view).navigate(action);
             }
         });
 
-        healthy_food.setOnClickListener(new View.OnClickListener() {
+        meat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainFragmentDirections.ActionCategoryToRecList action = MainFragmentDirections.actionCategoryToRecList("Healthy food");
-                Navigation.findNavController(view).navigate(action);
-            }
-        });
-
-        cookies.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainFragmentDirections.ActionCategoryToRecList action = MainFragmentDirections.actionCategoryToRecList("Cookies");
+                HomeFragmentDirections.ActionCategoryToRecipesList action = HomeFragmentDirections.actionCategoryToRecipesList("Meat");
                 Navigation.findNavController(view).navigate(action);
             }
         });
@@ -84,10 +73,18 @@ public class HomeFragment extends Fragment {
         desserts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainFragmentDirections.ActionCategoryToRecList action = MainFragmentDirections.actionCategoryToRecList("Desserts");
+                HomeFragmentDirections.ActionCategoryToRecipesList action = HomeFragmentDirections.actionCategoryToRecipesList("Dessert");
                 Navigation.findNavController(view).navigate(action);
             }
         });
+
+//        desserts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                HomeFragmentDirections.ActionCategoryToRecipesList action = HomeFragmentDirections.actionCategoryToRecipesList("Desserts");
+//                Navigation.findNavController(view).navigate(action);
+//            }
+//        });
 
 
 

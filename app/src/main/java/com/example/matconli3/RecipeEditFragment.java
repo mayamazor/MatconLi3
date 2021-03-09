@@ -81,7 +81,7 @@ public class RecipeEditFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chooseCategory.setAdapter(adapter);
 
-        recipe = Recipe_Page_FragmentArgs.fromBundle(getArguments()).getRecipe();
+        recipe = RecipeFragmentArgs.fromBundle(getArguments()).getRecipe();
 
         if (recipe != null)
         {
@@ -118,7 +118,7 @@ public class RecipeEditFragment extends Fragment {
                 @Override
                 public void onSuccess(String url) {
 
-                    Model.instance.addRec(generatedEditedRecipe(url), new Model.Listener<Boolean>() {
+                    Model.instance.addRecipe(generatedEditedRecipe(url), new Model.Listener<Boolean>() {
                         @Override
                         public void onComplete(Boolean data)
                         {
@@ -137,7 +137,7 @@ public class RecipeEditFragment extends Fragment {
             });
         }
         else {
-            Model.instance.addRec(generatedEditedRecipe(null), new Model.Listener<Boolean>() {
+            Model.instance.addRecipe(generatedEditedRecipe(null), new Model.Listener<Boolean>() {
                 @Override
                 public void onComplete(Boolean data)
                 {

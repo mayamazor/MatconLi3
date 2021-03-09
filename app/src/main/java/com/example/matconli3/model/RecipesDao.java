@@ -28,7 +28,7 @@ public interface RecipesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Recipe... recipe);
     @Delete
-    void delete(Recipe recipe);
+    void deleteRecipe(Recipe recipe);
 
     @Query("select exists(select * from Recipe where id = :recipeId)")
     boolean isRecipeExists(String recipeId);

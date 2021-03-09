@@ -1,23 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EAC5C5"
-    android:orientation="vertical"
-    tools:context=".RecipeFragment">
+    android:background="#4D673AB7">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/students_list_swipe_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/instructions_list_txt"
+        android:layout_width="191dp"
+        android:layout_height="83dp"
+        android:layout_marginStart="204dp"
+        android:layout_marginTop="444dp"
+        android:background="#4D673AB7"
+        android:scrollbars="vertical"
+        android:text="The Instructions List"
+        android:textAlignment="center"
+        android:textColor="#0C0C0C"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recommend_list_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/picture_food" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <TextView
+        android:id="@+id/Instructions_title"
+        android:layout_width="154dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="444dp"
+        android:background="#EACBCB"
+        android:text="How To Make It:"
+        app:backgroundTint="#AE9E83CD"
+        android:textAlignment="center"
+        android:textColor="#090808"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/ingredients_list_txt"
+        android:layout_width="199dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="196dp"
+        android:layout_marginTop="312dp"
+        android:autoText="false"
+        android:background="#EACBCB"
+        android:scrollbars="vertical"
+        android:text="The Ingredients List"
+        app:backgroundTint="#AE9E83CD"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/Ingredients_title"
+        android:layout_width="154dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="312dp"
+        android:background="#EACBCB"
+        android:text="Ingredients:"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:backgroundTint="#4D673AB7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Category_title"
+        android:layout_width="136dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="184dp"
+        android:background="#4D673AB7"
+
+        android:text="Category"
+        android:textAlignment="center"
+        android:textColor="#070707"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/Rec_Name_txt"
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/Rec_img_btn"
+        android:layout_width="279dp"
+        android:layout_height="147dp"
+        android:background="#EACBCB"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.035"
+        tools:src="@drawable/add" />
+
+    <TextView
+        android:id="@+id/Rec_Name_txt"
+        android:layout_width="146dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="184dp"
+        android:layout_marginBottom="84dp"
+        android:background="#EACBCB"
+        android:text="Recipe Name"
+        android:textAlignment="center"
+        android:textColor="#040303"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:backgroundTint="#AE9E83CD"
+        app:layout_constraintBottom_toTopOf="@+id/Ingredients_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/edit_rec_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        app:backgroundTint="#AE9E83CD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/delete_rec_btn"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Instructions_title"
+        app:layout_constraintVertical_bias="0.684" />
+
+    <Button
+        android:id="@+id/delete_rec_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="delete"
+        app:backgroundTint="#AE9E83CD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.767"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/instructions_list_txt"
+        app:layout_constraintVertical_bias="0.792" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="93dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="Details"
+        android:textColor="#040404"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/Rec_img_btn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

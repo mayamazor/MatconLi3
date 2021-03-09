@@ -1,78 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:orientation="vertical"
-    tools:context=".ProfileFragment">
+    android:background="@drawable/back3"
+    tools:ignore="ExtraText">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="112dp">
+    <Button
+        android:id="@+id/profile_fragment_edit_btn"
+        android:layout_width="125dp"
+        android:layout_height="109dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="172dp"
+        android:fontFamily="sans-serif-medium"
+        android:includeFontPadding="true"
+        android:text="Edit profile"
+        android:textSize="16dp"
+        app:backgroundTint="#7CCD4C79"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/user_profile_welcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="10dp"
-            android:text="Welcome"
-            android:textColor="#0B0B0B"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/button_map"
-            app:layout_constraintEnd_toStartOf="@+id/user_profile_user_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/profile_fragment_my_recipes_book_btn"
+        android:layout_width="125dp"
+        android:layout_height="109dp"
+        android:layout_marginBottom="172dp"
+        android:fontFamily="sans-serif-medium"
+        android:includeFontPadding="true"
+        android:text="My Recipes"
+        android:textSize="16dp"
+        app:backgroundTint="#7CCD4C79"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/profile_fragment_edit_btn"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/user_profile_user_name"
-            android:layout_width="126dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="33dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="44dp"
-            android:textColor="#151414"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/user_profile_logout_button"
-            app:layout_constraintStart_toEndOf="@+id/user_profile_welcome"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/profile_fragment_email_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="135dp"
+        android:layout_marginEnd="135dp"
+        android:text="Email"
+        android:textColor="#EE0C0C0C"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.309" />
 
-        <Button
-            android:id="@+id/user_profile_logout_button"
-            android:layout_width="24dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="55dp"
-            android:layout_marginEnd="8dp"
-            android:text="Logout"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/profile_fragment_username_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:text="Username"
+        android:textColor="#EE0C0C0C"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/profile_fragment_email_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
 
-        <Button
-            android:id="@+id/button_map"
-            android:layout_width="41dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="208dp"
-            android:layout_marginBottom="9dp"
-            android:text="Map"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/user_profile_logout_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_profile_welcome" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/profile_fragment_yourprofile_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="100dp"
+        android:text="My Profile"
+        android:textColor="#EE0C0C0C"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        app:backgroundTint="#7CCD4C79"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.304"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/profile_recipes_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+    <Button
+        android:id="@+id/profile_fragment_logout_btn"
+        android:layout_width="211dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:text="logout"
+        android:textSize="21sp"
+        app:backgroundTint="#AE9E83CD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.915" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="84dp"
+        android:text="Welcome"
+        android:textColor="#EE0C0C0C"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" /><![CDATA[
+
+
+
+
+    android:id="@+id/profile_fragment_my_recipes_book_icon"
+    android:layout_width="75dp"
+    android:layout_height="58dp"
+    android:layout_marginTop="48dp"
+    app:layout_constraintEnd_toStartOf="@+id/profile_fragment_my_recipes_book_btn"
+    app:layout_constraintTop_toBottomOf="@+id/profile_fragment_profile_image_view"
+    app:srcCompat="@drawable/pic2" />
+
+
+
+]]>
+</androidx.constraintlayout.widget.ConstraintLayout>

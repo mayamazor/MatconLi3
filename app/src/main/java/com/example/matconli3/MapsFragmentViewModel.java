@@ -1,13 +1,14 @@
 package com.example.matconli3;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.matconli3.model.Model;
 import com.example.matconli3.model.Recipe;
 
 import java.util.List;
 
-public class MapsFragmentViewModel {
+public class MapsFragmentViewModel extends ViewModel {
 
     LiveData<List<Recipe>> liveData;
     Recipe recipe;

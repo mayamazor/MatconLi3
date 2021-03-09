@@ -17,12 +17,7 @@ public class Recipe implements Serializable {
     @PrimaryKey
     @NonNull
     public String id ;
-//    public String Ownerid;
-//    public String OwenrName;
     public String title;
-//    public String location;
-//    public String description;
-//    public String avatar;
     public long lastUpdated;
     public String categoryId;
     public String recIngredients;
@@ -31,41 +26,11 @@ public class Recipe implements Serializable {
     public String userId;
     public String username;
 
+    @NonNull
     public double lat;
+
+    @NonNull
     public double lon;
-
-
-
-    public Recipe(String id, String title, String categoryId, String recIngredients, String recContent, String recipeImgUrl, String userId, String username) {
-        this.id = id;
-        this.title = title;
-        this.categoryId = categoryId;
-        this.recIngredients = recIngredients;
-        this.recContent = recContent;
-        this.recipeImgUrl = recipeImgUrl;
-        this.userId = userId;
-        this.username = username;
-    }
-//
-//    public Recipe(String ownerId, String ownerName, String title, String location, String description, String avatar) {
-//        this.Ownerid = ownerId;
-//        this.OwenrName = ownerName;
-//        this.title = title;
-//        this.location = location;
-//        this.description = description;
-//        this.avatar= avatar;
-//    }
-//
-//    public Recipe(String id, String ownerId, String ownerName, String title, String location, String description, String avatar) {
-//        this.id = id;
-//        this.Ownerid = ownerId;
-//        this.OwenrName = ownerName;
-//        this.title = title;
-//        this.location = location;
-//        this.description = description;
-//        this.avatar= avatar;
-//
-//    }
 
 
     public Recipe() {
@@ -78,7 +43,21 @@ public class Recipe implements Serializable {
         userId = "";
         username = "";
         lastUpdated = 0;
+
     }
+
+    public Recipe(String id, String title, String categoryId, String recIngredients, String recContent, String recipeImgUrl, String userId, String username) {
+        this.id = id;
+        this.title = title;
+        this.categoryId = categoryId;
+        this.recIngredients = recIngredients;
+        this.recContent = recContent;
+        this.recipeImgUrl = recipeImgUrl;
+        this.userId = userId;
+        this.username = username;
+    }
+
+
 
     /////set
 

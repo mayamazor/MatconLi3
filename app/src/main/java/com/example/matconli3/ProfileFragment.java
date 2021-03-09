@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,20 +20,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.matconli3.model.Recipe;
 import com.example.matconli3.model.User.User;
-import com.example.matconli3.model.User.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
+
 
 
 public class ProfileFragment extends Fragment {
@@ -42,148 +46,93 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private ProfileViewModel viewModel;
+//    private ProfileViewModel viewModel;
 
-    View view;
-    RecipesListAdapter adapter;
-    RecyclerView profileOutfitsList;
-    List<Recipe> profileRecipesData = new LinkedList<Recipe>();
+    TextView userUsername;
+    TextView userEmail;
+    ImageView userProfileImage;
+    Button editProfileBtn;
+    Button myRecipesBook;
 
-    RecipeFragment.Delegate parent;
+    Button logoutBtn;
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseFirestore fb = FirebaseFirestore.getInstance();
-        if(auth.getCurrentUser()!=null) {
-            view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view =  inflater.inflate(R.layout.fragment_profile, container, false);
 
-            User user = UserModel.instance.getCurrentUser();
+        userUsername = view.findViewById(R.id.profile_fragment_username_text_view);
+        userEmail = view.findViewById(R.id.profile_fragment_email_text_view);
+        //userProfileImage = view.findViewById(R.id.profile_fragment_profile_image_view);
 
-
-            final TextView userName = view.findViewById(R.id.user_profile_user_name);
-
-            if(auth.getCurrentUser()!=null) {
-                String UserId = auth.getCurrentUser().getUid();
-                final DocumentReference documentReference = fb.collection("users").document(UserId);
-                documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                        userName.setText(documentSnapshot.getString("name"));
-                    }
-                });
+        editProfileBtn = view.findViewById(R.id.profile_fragment_edit_btn);
+        editProfileBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                toEditProfilePage();
             }
+        });
 
-            profileOutfitsList = view.findViewById(R.id.profile_recipes_list);
-            profileOutfitsList.setHasFixedSize(true);
+        myRecipesBook = view.findViewById(R.id.profile_fragment_my_recipes_book_btn);
+        myRecipesBook.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                ProfileFragmentDirections.ActionProfileToUserRecipes action = ProfileFragmentDirections.actionProfileToUserRecipes(User.getInstance().id);
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
+       //   myRecipesBook.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_profile_to_userRecipes));
 
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            profileOutfitsList.setLayoutManager(layoutManager);
+        logoutBtn= view.findViewById(R.id.profile_fragment_logout_btn);
+        logoutBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) { toLoginPage();}
 
-            adapter = new RecipesListAdapter();
-            profileOutfitsList.setAdapter(adapter);
+        });
 
-            adapter.setOnItemClickListener(new RecipeFragment.OnItemClickListener() {
-                @Override
-                public void onClick(int position) {
-                    Recipe recipe = profileRecipesData.get(position);
-                    parent.onItemSelected(recipe);
-                }
-            });
 
-            LiveData<List<Recipe>> liveData = viewModel.getData();
-            liveData.observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
-                @Override
-                public void onChanged(List<Recipe> recipes) {
-                    profileRecipesData = recipes;
-                    adapter.notifyDataSetChanged();
-                }
-            });
-
-            View logoutButton = view.findViewById(R.id.user_profile_logout_button);
-            logoutButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View buttonView) {
-                    viewModel.logout();
-                    NavController navController = Navigation.findNavController(view);
-                    navController.navigate(R.id.recipeFragment);
-                }
-            });
-
-            View mapBtn = view.findViewById(R.id.button_map);
-            mapBtn.setOnClickListener(new View.OnClickListener() {
-                @SuppressLint("ResourceType")
-                @Override
-                public void onClick(View buttonView) {
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), MapsActivity.class);
-                    getActivity().startActivity(intent);
-                }
-            });
-
-            return view;
-        }
-        else{
-            view =  inflater.inflate(R.layout.fragment_login, container, false);
-            AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Sorry","you must login before");
-            dialogFragment.show(getChildFragmentManager(), "TAG");
-        }
+        setUserProfile();
         return view;
     }
 
+
+    private void toLoginPage()
+    {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this.getActivity(), LoginActivity.class));
+    }
+
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof RecipeFragment.Delegate) {
-            parent = (RecipeFragment.Delegate) getActivity();
-        } else {
-            throw new RuntimeException(context.toString()
-                    + "profile recipes list parent activity must implement delegate");
-        }
-
-        viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        parent = null;
+    private void toEditProfilePage()
+    {
+        NavController navCtrl = Navigation.findNavController(getActivity(), R.id.main_nav_host);
+        NavDirections directions = ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment();
+        navCtrl.navigate(directions);
     }
 
-    class RecipesListAdapter extends RecyclerView.Adapter<RecipeFragment.RecipeViewHolder> {
-        private RecipeFragment.OnItemClickListener listener;
+    public void setUserProfile()
+    {
+        userUsername.setText(User.getInstance().name);
+        userEmail.setText(User.getInstance().email);
 
-        void setOnItemClickListener(RecipeFragment.OnItemClickListener listener) {
-            this.listener = listener;
-        }
-
-        @NonNull
-        @Override
-        public RecipeFragment.RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_row, parent, false);
-            RecipeFragment.RecipeViewHolder viewHolder = new RecipeFragment.RecipeViewHolder(view, listener);
-            return viewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RecipeFragment.RecipeViewHolder holder, int position) {
-            Recipe recipe = profileRecipesData.get(position);
-            holder.bind(recipe);
-        }
-
-
-        @Override
-        public int getItemCount() {
-            return profileRecipesData.size();
-        }
+//        if (User.getInstance().profileImageUrl != null)
+//        {
+//            Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(userProfileImage);
+//        }
     }
+
 
 
 }

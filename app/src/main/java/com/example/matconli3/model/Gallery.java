@@ -9,12 +9,8 @@ import com.example.matconli3.MyApplication;
 
 public class Gallery {
     static int REQUEST_CODE = 1;
-
-
-
     public static void chooseImageFromGallery(Activity sender)
     {
-
         try
         {
             Intent openGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT);

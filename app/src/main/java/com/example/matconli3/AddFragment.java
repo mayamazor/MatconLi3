@@ -11,184 +11,172 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.matconli3.model.AppLocalDb;
 import com.example.matconli3.model.Model;
 import com.example.matconli3.model.Recipe;
 import com.example.matconli3.model.StoreModel;
+import com.example.matconli3.model.User.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.Date;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import java.util.UUID;
+import com.example.matconli3.R;
+
+
 
 
 public class AddFragment extends Fragment {
     public AddFragment() {}
-
-    AddViewModel mViewModel;
     View view;
-    ImageView imageView;
-    Bitmap imageBitmap;
-    TextView idTv;
-    TextView OwnerIdTv;
-    TextView OwnerNameTv;
-    TextView titleTV;
-    TextView locationTv;
-    TextView descriptionTV;
-    private Recipe recipe;
+    EditText recipeTitleInput;
+    EditText recipeIngredientsInput;
+    EditText recipeInstructionsInput;
+    EditText address;
+    ImageView addImage;
+    Spinner chooseCategory;
+    Uri addImageUri;
+    Bitmap addImageBitmap;
+    String category;
+    static int REQUEST_CODE = 1;
+
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_add, container, false);
+        addImage = view.findViewById(R.id.newRecipe_add_img_icon_activity_imageView);
+        recipeTitleInput = view.findViewById(R.id.new_recipe_fragment_title_text_view);
+        recipeIngredientsInput = view.findViewById(R.id.new_recipe_fragment_Ingredients_edit_text);
+        recipeInstructionsInput = view.findViewById(R.id.new_recipe_fragment_Instructions_edit_text);
+        chooseCategory = (Spinner) view.findViewById(R.id.planets_spinner);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MyApplication.context,
+               R.array.planets_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chooseCategory.setAdapter(adapter);
 
-        if(auth.getCurrentUser()!=null){
-            view =  inflater.inflate(R.layout.fragment_add, container, false);
+        addImage.setOnClickListener((view) -> {
+            chooseImageFromGallery();
+        });
 
-
-
-            imageView= view.findViewById(R.id.edit_rec_image);
-            Button takePhotoBtn = view.findViewById(R.id.edit_rec_takePhoto_btn);
-            takePhotoBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    takePhoto();
-                }
-            });
-            titleTV = view.findViewById(R.id.edit_rec_title);
-            locationTv = view.findViewById(R.id.edit_rec_location);
-            descriptionTV= view.findViewById(R.id.edit_rec_description);
-
-
-            Button saveBtn = view.findViewById(R.id.edit_rec_save_btn);
-            saveBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        Button uploadBtn = view.findViewById(R.id.new_recipe_fragment_upload_btn);
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (addImageUri != null && recipeTitleInput != null && recipeIngredientsInput != null && recipeInstructionsInput != null )
                     saveRecipe();
-                }
-            });
-            return view;
-        }
-        else{
-            view =  inflater.inflate(R.layout.fragment_login, container, false);
-            AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Sorry","you must login before");
-            dialogFragment.show(getChildFragmentManager(), "TAG");
-        }
+                else
+                    Toast.makeText(getContext(), "Please fill all fields and add a photo", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }
-    void saveRecipe(){
-        final String id ;
-        String OwnerId;
-        String OwnerName = "";
-        final String title= titleTV.getText().toString();
-        final String location= locationTv.getText().toString();
-        final String description= descriptionTV.getText().toString();
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseFirestore fb = FirebaseFirestore.getInstance();
+    void saveRecipe() {
+        final Recipe newRecipe = generateNewRecipe();
 
-        final String userId = auth.getCurrentUser().getUid();
+        StoreModel.uploadImage(addImageBitmap, new StoreModel.Listener() {
+            @Override
+            public void onSuccess(String url) {
+                newRecipe.recipeImgUrl = url;
+                Model.instance.addRecipe(newRecipe, new Model.Listener<Boolean>() {
+                    @Override
+                    public void onComplete(Boolean data) {
+                        NavController navCtrl = Navigation.findNavController(view);
+                        navCtrl.navigateUp();
+                    }
+                });
+            }
 
-        Date date = new Date();
-        if (imageBitmap != null) {
-
-            StoreModel.uploadImage(imageBitmap, "Recipe_photo" + date.getTime(), new StoreModel.Listener() {
-                @Override
-                public void onSuccess(final String url) {
-                    Log.d("TAG", "url: " + url);
-                    Recipe recipe = new Recipe(userId, "", title, location, description, url);
-                   Model.instance.addRec(recipe, new Model.Listener<Boolean>() {
-                        @Override
-                        public void onComplete(Boolean data) {
-                            NavController navCtrl = Navigation.findNavController(view);
-                            navCtrl.navigateUp();
-                        }
-                    });
-                }
-
-                @Override
-                public void onFail() {
-
-                    Snackbar mySnackbar = Snackbar.make(view, R.string.fail_to_save_recipe, Snackbar.LENGTH_LONG);
-                    mySnackbar.show();
-                }
-            });
-        }
-        else {
-            AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Sorry","you must load photo");
-            dialogFragment.show(getChildFragmentManager(), "TAG");
-        }
-
-
-    }
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    final static int RESAULT_SUCCESS = 0;
-
-    void takePhoto(){
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE &&
-                resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            imageBitmap = rotateImage((Bitmap) extras.get("data"));
-            imageView.setImageBitmap(imageBitmap);
-        }
-    }
-    public static Bitmap rotateImage(Bitmap source) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+            @Override
+            public void onFail() {
+                Snackbar.make(view, "Failed to create post recipe and save it in databases", Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
-
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        NavController navController = Navigation.findNavController(view);
-
-        switch (item.getItemId()){
-            case R.id.login_now_button:
-                Log.d("TAG","fragment handle login menu");
-                navController.navigate(R.id.action_global_loginFragment);
-                return true;
-
-            case R.id.logout_btn:
-                Log.d("TAG","fragment handle logout menu");
-                navController.navigate(R.id.action_global_recipeFragment);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    private Recipe generateNewRecipe() {
+        Recipe newRecipe = new Recipe();
+        newRecipe.id = UUID.randomUUID().toString();
+        newRecipe.title = recipeTitleInput.getText().toString();
+        newRecipe.recIngredients = recipeIngredientsInput.getText().toString();
+        newRecipe.recContent = recipeInstructionsInput.getText().toString();
+        newRecipe.recipeImgUrl = null;
+        newRecipe.userId = User.getInstance().id;
+       // newRecipe.recipeImgUrl = User.getInstance().profileImageUrl;
+        newRecipe.username = User.getInstance().name;
+        newRecipe.categoryId = chooseCategory.getSelectedItem().toString();
+        newRecipe.lat = Model.instance.getLocation().latitude;
+        newRecipe.lon = Model.instance.getLocation().longitude;
+        return newRecipe;
     }
+
+    void chooseImageFromGallery() {
+        try {
+            Intent openGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            openGalleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+
+            startActivityForResult(openGalleryIntent, REQUEST_CODE);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "New post recipe Page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ( data != null && resultCode == RESULT_OK) {
+            addImageUri = data.getData();
+            addImage.setImageURI(addImageUri);
+            addImageBitmap = uriToBitmap(addImageUri);
+        } else {
+            Toast.makeText(getActivity(), "No image was selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Bitmap uriToBitmap(Uri selectedFileUri) {
+        try {
+            ParcelFileDescriptor parcelFileDescriptor = getContext().getContentResolver().openFileDescriptor(selectedFileUri, "r");
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+            parcelFileDescriptor.close();
+            return image;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

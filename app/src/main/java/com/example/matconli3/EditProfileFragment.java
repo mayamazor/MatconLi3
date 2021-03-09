@@ -72,18 +72,20 @@ public class EditProfileFragment extends Fragment {
                 updateUserProfile();
             }
         });
-        setEditProfileHints();
+        // change
+       // setEditProfileHints();
         return view;
     }
 
-    private void setEditProfileHints()
-    {
-        if (User.getInstance().profileImageUrl != null)
-        {
-            Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(profilePicImageView);
-        }
-        usernameInput.setHint(User.getInstance().name);
-    }
+    // change
+//    private void setEditProfileHints()
+//    {
+//        if (User.getInstance().profileImageUrl != null)
+//        {
+//            Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(profilePicImageView);
+//        }
+//        usernameInput.setHint(User.getInstance().name);
+//    }
 
     void updateUserProfile()
     {

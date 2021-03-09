@@ -37,7 +37,7 @@ public class StoreModel {
         {
 
             Date date = new Date();
-            String imageName = User.getInstance().userUsername + date.getTime();
+            String imageName = User.getInstance().name + date.getTime();
             FirebaseStorage storageReference = FirebaseStorage.getInstance();
             final StorageReference imageRef = storageReference.getReference().child("images").child(imageName);
 

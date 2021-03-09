@@ -57,7 +57,7 @@ public class MapsFragment extends Fragment {
     private void setMarkers() {
         map.clear();
         for (Recipe recipe : data) {
-            Marker marker = map.addMarker(new MarkerOptions().position(new LatLng(recipe.lat, recipe.lon)).title(recipe.recipeName));
+            Marker marker = map.addMarker(new MarkerOptions().position(new LatLng(recipe.lat, recipe.lon)).title(recipe.title));
             marker.setTag(recipe.id);
 
             map.setOnMarkerClickListener(clickedMarker -> {
@@ -75,7 +75,7 @@ public class MapsFragment extends Fragment {
                         }
                     }
 
-                    MapsFragmentDirections.ActionMapsFragmentToRecipePage action = MapsFragmentDirections.actionMapsFragmentToRecipePage(recipe2);
+                    MapsFragmentDirections.ActionMapsFragmentToRecipe action = MapsFragmentDirections.actionMapsFragmentToRecipe(recipe2);
                     Navigation.findNavController(getActivity(), R.id.main_nav_host).navigate(action);
                 } else {
                     lastClicked = tag;
