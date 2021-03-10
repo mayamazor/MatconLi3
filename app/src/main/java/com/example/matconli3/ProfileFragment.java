@@ -1,21 +1,14 @@
 package com.example.matconli3;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,19 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.matconli3.model.Recipe;
 import com.example.matconli3.model.User.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.squareup.picasso.Picasso;
-
-import java.util.LinkedList;
-import java.util.List;
-
 
 
 public class ProfileFragment extends Fragment {
@@ -64,11 +46,11 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
 
-        userUsername = view.findViewById(R.id.profile_fragment_username_text_view);
-        userEmail = view.findViewById(R.id.profile_fragment_email_text_view);
+        userUsername = view.findViewById(R.id.profile_fragment_username);
+        userEmail = view.findViewById(R.id.profile_fragment_email);
         //userProfileImage = view.findViewById(R.id.profile_fragment_profile_image_view);
 
-        editProfileBtn = view.findViewById(R.id.profile_fragment_edit_btn);
+        editProfileBtn = view.findViewById(R.id.profile_fragment_edit);
         editProfileBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -78,7 +60,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        myRecipesBook = view.findViewById(R.id.profile_fragment_my_recipes_book_btn);
+        myRecipesBook = view.findViewById(R.id.profile_fragment_my_recipes);
         myRecipesBook.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -90,7 +72,7 @@ public class ProfileFragment extends Fragment {
         });
        //   myRecipesBook.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_profile_to_userRecipes));
 
-        logoutBtn= view.findViewById(R.id.profile_fragment_logout_btn);
+        logoutBtn= view.findViewById(R.id.profile_fragment_logout);
         logoutBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override

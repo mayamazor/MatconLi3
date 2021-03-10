@@ -8,7 +8,7 @@
     android:background="#4D673AB7">
 
     <TextView
-        android:id="@+id/instructions_list_txt"
+        android:id="@+id/recipe_fragment_make_it_list"
         android:layout_width="191dp"
         android:layout_height="83dp"
         android:layout_marginStart="204dp"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Instructions_title"
+        android:id="@+id/recipe_fragment_make_it"
         android:layout_width="154dp"
         android:layout_height="38dp"
         android:layout_marginStart="40dp"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ingredients_list_txt"
+        android:id="@+id/recipe_fragment_ingredients_list"
         android:layout_width="199dp"
         android:layout_height="93dp"
         android:layout_marginStart="196dp"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Ingredients_title"
+        android:id="@+id/recipe_fragment_ingredients"
         android:layout_width="154dp"
         android:layout_height="38dp"
         android:layout_marginStart="40dp"
@@ -75,7 +75,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Category_title"
+        android:id="@+id/recipe_fragment_category"
         android:layout_width="136dp"
         android:layout_height="41dp"
         android:layout_marginTop="184dp"
@@ -86,16 +86,16 @@
         android:textColor="#070707"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/Rec_Name_txt"
+        app:layout_constraintEnd_toStartOf="@+id/recipe_fragment_name"
         app:layout_constraintHorizontal_bias="0.519"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/Rec_img_btn"
+        android:id="@+id/recipe_fragment_img"
         android:layout_width="279dp"
         android:layout_height="147dp"
-        android:background="#EACBCB"
+        android:background="#4D673AB7"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
         tools:src="@drawable/add" />
 
     <TextView
-        android:id="@+id/Rec_Name_txt"
+        android:id="@+id/recipe_fragment_name"
         android:layout_width="146dp"
         android:layout_height="45dp"
         android:layout_marginTop="184dp"
@@ -117,7 +117,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:backgroundTint="#AE9E83CD"
-        app:layout_constraintBottom_toTopOf="@+id/Ingredients_title"
+        app:layout_constraintBottom_toTopOf="@+id/recipe_fragment_ingredients"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,20 +125,20 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/edit_rec_btn"
+        android:id="@+id/recipe_fragment_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit"
         app:backgroundTint="#AE9E83CD"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/delete_rec_btn"
+        app:layout_constraintEnd_toStartOf="@+id/recipe_fragment_delete"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Instructions_title"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_fragment_make_it"
         app:layout_constraintVertical_bias="0.684" />
 
     <Button
-        android:id="@+id/delete_rec_btn"
+        android:id="@+id/recipe_fragment_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="delete"
@@ -147,11 +147,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.767"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/instructions_list_txt"
+        app:layout_constraintTop_toTopOf="@+id/recipe_fragment_make_it_list"
         app:layout_constraintVertical_bias="0.792" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/recipe_fragment_details"
         android:layout_width="93dp"
         android:layout_height="31dp"
         android:layout_marginStart="4dp"
@@ -160,7 +160,7 @@
         android:textColor="#040404"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/Rec_img_btn"
+        app:layout_constraintEnd_toStartOf="@+id/recipe_fragment_img"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

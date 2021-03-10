@@ -8,7 +8,16 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
-    defaultConfig {
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a'
+            universalApk true
+        }
+                }
+
+        defaultConfig {
         applicationId "com.example.matconli3"
         minSdkVersion 19
         targetSdkVersion 30

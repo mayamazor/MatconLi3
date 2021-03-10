@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C9EDDCB2">
+    android:background="#4D673AB7">
 
     <ImageView
         android:id="@+id/home_activity_main_logo"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.293"
-        app:srcCompat="@drawable/pic2" />
+        app:srcCompat="@drawable/matconli" />
 
     <ProgressBar
         android:id="@+id/progressBar"

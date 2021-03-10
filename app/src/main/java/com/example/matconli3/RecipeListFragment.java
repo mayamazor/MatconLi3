@@ -89,7 +89,7 @@ public class RecipeListFragment extends Fragment {
         });
 
 
-        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.feed_list_swipe_refresh);
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.recipe_list_fragment_swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -131,7 +131,7 @@ public class RecipeListFragment extends Fragment {
 
             recipeTitle = itemView.findViewById(R.id.row_recipe_title_text_view);
             recipeImg = itemView.findViewById(R.id.row_recipe_image_view);
-            username = itemView.findViewById(R.id.row_username_text_view);
+            username = itemView.findViewById(R.id.row_username);
             progressBar = itemView.findViewById(R.id.row_recipe_progress_bar);
 
 

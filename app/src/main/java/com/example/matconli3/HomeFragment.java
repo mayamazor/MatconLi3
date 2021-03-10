@@ -31,11 +31,11 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        pasta = view.findViewById(R.id.main_fragment_pasta_image_view);
-        pizza = view.findViewById(R.id.main_fragment_pizza_image_view);
-        salads = view.findViewById(R.id.main_fragment_salads_image_view);
-        meat = view.findViewById(R.id.main_fragment_meat_image_view);
-        desserts = view.findViewById(R.id.main_fragment_dessert_image_view);
+        pasta = view.findViewById(R.id.home_fragment_pasta);
+        pizza = view.findViewById(R.id.home_fragment_pizza);
+        salads = view.findViewById(R.id.home_fragment_salads);
+        meat = view.findViewById(R.id.home_fragment_meat);
+        desserts = view.findViewById(R.id.home_fragment_dessert);
       //  desserts = view.findViewById(R.id.main_fragment_deserts_image_view);
 
         pasta.setOnClickListener(new View.OnClickListener() {

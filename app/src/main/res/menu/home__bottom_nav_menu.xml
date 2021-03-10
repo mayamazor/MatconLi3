@@ -7,7 +7,7 @@
     <item
         android:id="@id/addFragment"
         android:icon="@drawable/pic2"
-        android:title="New Recipe" />
+        android:title="Add Recipe" />
     <item
         android:id="@id/mapFragment"
         android:icon="@drawable/pic2"

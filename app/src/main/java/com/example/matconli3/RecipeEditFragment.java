@@ -3,11 +3,9 @@ package com.example.matconli3;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -15,9 +13,7 @@ import androidx.navigation.Navigation;
 
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -25,22 +21,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matconli3.model.Model;
-import com.example.matconli3.model.ModelFirebase;
 import com.example.matconli3.model.Recipe;
 import com.example.matconli3.model.StoreModel;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 import static android.app.Activity.RESULT_OK;
 
 
 import java.io.FileDescriptor;
 import java.io.IOException;
-import java.util.Date;
 
 
 public class RecipeEditFragment extends Fragment {
@@ -70,10 +62,10 @@ public class RecipeEditFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view =  inflater.inflate(R.layout.fragment_recipe_edit, container, false);
-        titleInput = view.findViewById(R.id.edit_recipe_fragment_title_text_view);
+        titleInput = view.findViewById(R.id.edit_recipe_fragment_name);
         ingredientsInput = view.findViewById(R.id.edit_recipe_fragment_Ingredients_edit_text);
-        instructionsInput = view.findViewById(R.id.edit_recipe_fragment_Instructions_edit_text);
-        recipeImageView = view.findViewById(R.id.editRecipe_change_img_icon_activity_imageView);
+        instructionsInput = view.findViewById(R.id.edit_recipe_fragment_make_it);
+        recipeImageView = view.findViewById(R.id.edit_recipe_fragment_edit_img);
         chooseCategory = (Spinner) view.findViewById(R.id.edit_recipe_fragment_category_spinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MyApplication.context,
@@ -97,7 +89,7 @@ public class RecipeEditFragment extends Fragment {
             }
         });
 
-        saveChangesBtn = view.findViewById(R.id.edit_recipe_fragment_save_changes_btn);
+        saveChangesBtn = view.findViewById(R.id.edit_recipe_fragment_save);
         saveChangesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

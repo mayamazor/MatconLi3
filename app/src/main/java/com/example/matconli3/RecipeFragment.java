@@ -49,13 +49,13 @@ public class RecipeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_recipe, container, false);
 
 
-        categoryTitle = view.findViewById(R.id.Category_title);
-        recipeName = view.findViewById(R.id.Rec_Name_txt);
-        ingredientsTitle = view.findViewById(R.id.Ingredients_title);
-        ingredientsList = view.findViewById(R.id.ingredients_list_txt);
-        instructionTitle = view.findViewById(R.id.Instructions_title);
-        instructionList = view.findViewById(R.id.instructions_list_txt);
-        recImg = view.findViewById(R.id.Rec_img_btn);
+        categoryTitle = view.findViewById(R.id.recipe_fragment_category);
+        recipeName = view.findViewById(R.id.recipe_fragment_name);
+        ingredientsTitle = view.findViewById(R.id.recipe_fragment_ingredients);
+        ingredientsList = view.findViewById(R.id.recipe_fragment_ingredients_list);
+        instructionTitle = view.findViewById(R.id.recipe_fragment_make_it);
+        instructionList = view.findViewById(R.id.recipe_fragment_make_it_list);
+        recImg = view.findViewById(R.id.recipe_fragment_img);
         instructionList.setMovementMethod(new ScrollingMovementMethod());
         ingredientsList.setMovementMethod(new ScrollingMovementMethod());
 
@@ -75,9 +75,9 @@ public class RecipeFragment extends Fragment {
             }
 
         }
-        edit = view.findViewById(R.id.edit_rec_btn);
+        edit = view.findViewById(R.id.recipe_fragment_edit);
         edit.setVisibility(view.INVISIBLE);
-        delete = view.findViewById(R.id.delete_rec_btn);
+        delete = view.findViewById(R.id.recipe_fragment_delete);
         delete.setVisibility(view.INVISIBLE);
 
         if (recipe.userId.equals(User.getInstance().id))

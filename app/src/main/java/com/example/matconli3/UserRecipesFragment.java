@@ -58,7 +58,7 @@ public class UserRecipesFragment extends Fragment {
         userId =  UserRecipesFragmentArgs.fromBundle(getArguments()).getUserId();
 
 
-        list= view.findViewById(R.id.my_recipes_list);
+        list= view.findViewById(R.id.user_recipes_list);
         list.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -131,10 +131,10 @@ public class UserRecipesFragment extends Fragment {
         public  UserRecipesViewHolder(@NonNull View itemView, final  UserRecipesFragment.OnItemClickListener listener) {
             super(itemView);
 
-            recipeTitle = itemView.findViewById(R.id.my_recipes_list_row_title_text_view);
-            recipeImg = itemView.findViewById(R.id.my_recipes_list_row_image_view);
-            username = itemView.findViewById(R.id.my_recipes_list_row_username_text_view);
-            progressBar = itemView.findViewById(R.id.my_recipes_list_row_progress_bar);
+            recipeTitle = itemView.findViewById(R.id.user_recipes_list_row_recipe_name);
+            recipeImg = itemView.findViewById(R.id.user_recipes_list_row_image_view);
+            username = itemView.findViewById(R.id.user_recipes_list_row_username);
+            progressBar = itemView.findViewById(R.id.user_recipes_list_row_spinner);
 
 
 

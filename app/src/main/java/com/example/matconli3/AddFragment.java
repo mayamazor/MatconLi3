@@ -1,57 +1,39 @@
 package com.example.matconli3;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.matconli3.model.AppLocalDb;
 import com.example.matconli3.model.Model;
 import com.example.matconli3.model.Recipe;
 import com.example.matconli3.model.StoreModel;
 import com.example.matconli3.model.User.User;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
-import java.util.Date;
 
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import java.util.UUID;
-import com.example.matconli3.R;
-
-
 
 
 public class AddFragment extends Fragment {
@@ -73,10 +55,10 @@ public class AddFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add, container, false);
-        addImage = view.findViewById(R.id.newRecipe_add_img_icon_activity_imageView);
-        recipeTitleInput = view.findViewById(R.id.new_recipe_fragment_title_text_view);
-        recipeIngredientsInput = view.findViewById(R.id.new_recipe_fragment_Ingredients_edit_text);
-        recipeInstructionsInput = view.findViewById(R.id.new_recipe_fragment_Instructions_edit_text);
+        addImage = view.findViewById(R.id.add_fragment_add_image);
+        recipeTitleInput = view.findViewById(R.id.add_fragment_recipe_name);
+        recipeIngredientsInput = view.findViewById(R.id.add_fragment_Ingredients);
+        recipeInstructionsInput = view.findViewById(R.id.add_fragment_make_it);
         chooseCategory = (Spinner) view.findViewById(R.id.planets_spinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MyApplication.context,
@@ -88,7 +70,7 @@ public class AddFragment extends Fragment {
             chooseImageFromGallery();
         });
 
-        Button uploadBtn = view.findViewById(R.id.new_recipe_fragment_upload_btn);
+        Button uploadBtn = view.findViewById(R.id.add_fragment_upload);
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

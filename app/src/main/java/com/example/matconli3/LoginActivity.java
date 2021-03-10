@@ -36,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         this.setTitle("Login");
 
-        emailInput = findViewById(R.id.login_activity_email_edit_text);
-        passwordInput = findViewById(R.id.login_activity_pass_edit_text);
+        emailInput = findViewById(R.id.login_activity_email);
+        passwordInput = findViewById(R.id.login_activity_password);
 
         registerBtn = findViewById(R.id.login_activity_register_btn);
         registerBtn.setOnClickListener(new View.OnClickListener() {

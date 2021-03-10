@@ -15,14 +15,14 @@
         android:background="#F5F5F5"
         android:text="Register"
         android:textSize="18sp"
-        app:backgroundTint="#953E5C"
+        app:backgroundTint="#AE9E83CD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.406"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/register_activity_pass_edit_text"
+        android:id="@+id/register_activity_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -45,14 +45,14 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/register_activity_pass_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/register_activity_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.381"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_activity_username_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/register_activity_username" />
 
     <EditText
-        android:id="@+id/register_activity_username_edit_text"
+        android:id="@+id/register_activity_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="86dp"

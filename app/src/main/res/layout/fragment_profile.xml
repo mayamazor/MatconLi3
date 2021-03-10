@@ -8,7 +8,7 @@
     tools:ignore="ExtraText">
 
     <Button
-        android:id="@+id/profile_fragment_edit_btn"
+        android:id="@+id/profile_fragment_edit"
         android:layout_width="125dp"
         android:layout_height="109dp"
         android:layout_marginEnd="40dp"
@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/profile_fragment_my_recipes_book_btn"
+        android:id="@+id/profile_fragment_my_recipes"
         android:layout_width="125dp"
         android:layout_height="109dp"
         android:layout_marginBottom="172dp"
@@ -32,12 +32,12 @@
         android:textSize="16dp"
         app:backgroundTint="#7CCD4C79"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/profile_fragment_edit_btn"
+        app:layout_constraintEnd_toStartOf="@+id/profile_fragment_edit"
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/profile_fragment_email_text_view"
+        android:id="@+id/profile_fragment_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="135dp"
@@ -54,7 +54,7 @@
         app:layout_constraintVertical_bias="0.309" />
 
     <TextView
-        android:id="@+id/profile_fragment_username_text_view"
+        android:id="@+id/profile_fragment_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="52dp"
@@ -62,13 +62,13 @@
         android:textColor="#EE0C0C0C"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/profile_fragment_email_text_view"
+        app:layout_constraintBottom_toTopOf="@+id/profile_fragment_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
+        app:layout_constraintStart_toEndOf="@+id/profile_fragment_welcome" />
 
     <TextView
-        android:id="@+id/profile_fragment_yourprofile_text_view"
+        android:id="@+id/profile_fragment_my_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -85,7 +85,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/profile_fragment_logout_btn"
+        android:id="@+id/profile_fragment_logout"
         android:layout_width="211dp"
         android:layout_height="53dp"
         android:layout_marginStart="50dp"
@@ -100,7 +100,7 @@
         app:layout_constraintVertical_bias="0.915" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/profile_fragment_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"

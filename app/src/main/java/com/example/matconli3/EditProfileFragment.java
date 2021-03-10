@@ -25,7 +25,6 @@ import com.example.matconli3.model.Model;
 import com.example.matconli3.model.StoreModel;
 import com.example.matconli3.model.User.User;
 import com.google.android.material.snackbar.Snackbar;
-import com.squareup.picasso.Picasso;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -52,7 +51,7 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
-        profilePicImageView = view.findViewById(R.id.edit_fragment_add_img_icon_activity_imageView);
+        profilePicImageView = view.findViewById(R.id.edit_fragment_add_img);
         usernameInput = view.findViewById(R.id.editProfile_fragment_username_edit_text);
 
         profilePicImageView.setOnClickListener(new View.OnClickListener()
@@ -72,8 +71,11 @@ public class EditProfileFragment extends Fragment {
                 updateUserProfile();
             }
         });
+
+        //added
+        //added
         // change
-       // setEditProfileHints();
+    //   setEditProfileHints();
         return view;
     }
 

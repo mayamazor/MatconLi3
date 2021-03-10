@@ -9,11 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.matconli3.model.Gallery;
 import com.example.matconli3.model.ModelFirebase;
 
 
@@ -34,8 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        userName = findViewById(R.id.register_activity_username_edit_text);
-        password = findViewById(R.id.register_activity_pass_edit_text);
+        userName = findViewById(R.id.register_activity_username);
+        password = findViewById(R.id.register_activity_password);
         email = findViewById(R.id.register_activity_email_edit_text);
        // profileImageView = findViewById(R.id.register_add_img_icon_activity_imageView);
         registerBtn = findViewById(R.id.register_activity_register_btn);
