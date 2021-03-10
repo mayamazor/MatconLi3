@@ -78,7 +78,6 @@ public class UserRecipesFragment extends Fragment {
             }
         });
 
-        //live data
         liveData = viewModel.getDataByUser(userId);
         liveData.observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
@@ -178,7 +177,6 @@ public class UserRecipesFragment extends Fragment {
         @NonNull
         @Override
         public UserRecipesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            //create row
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_user_recipes_row,parent,false);
             UserRecipesFragment.UserRecipesViewHolder userrecipeViewHolder = new UserRecipesFragment.UserRecipesViewHolder(view,listener);
             return userrecipeViewHolder;

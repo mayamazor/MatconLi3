@@ -22,7 +22,6 @@ public class HomeFragment extends Fragment {
     ImageView salads;
     ImageView meat;
     ImageView desserts;
-    //ImageView desserts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +35,6 @@ public class HomeFragment extends Fragment {
         salads = view.findViewById(R.id.home_fragment_salads);
         meat = view.findViewById(R.id.home_fragment_meat);
         desserts = view.findViewById(R.id.home_fragment_dessert);
-      //  desserts = view.findViewById(R.id.main_fragment_deserts_image_view);
 
         pasta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,17 +75,6 @@ public class HomeFragment extends Fragment {
                 Navigation.findNavController(view).navigate(action);
             }
         });
-
-//        desserts.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                HomeFragmentDirections.ActionCategoryToRecipesList action = HomeFragmentDirections.actionCategoryToRecipesList("Desserts");
-//                Navigation.findNavController(view).navigate(action);
-//            }
-//        });
-
-
-
 
 
         return view;

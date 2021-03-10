@@ -72,22 +72,10 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-        //added
-        //added
-        // change
-    //   setEditProfileHints();
+
         return view;
     }
 
-    // change
-//    private void setEditProfileHints()
-//    {
-//        if (User.getInstance().profileImageUrl != null)
-//        {
-//            Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(profilePicImageView);
-//        }
-//        usernameInput.setHint(User.getInstance().name);
-//    }
 
     void updateUserProfile()
     {

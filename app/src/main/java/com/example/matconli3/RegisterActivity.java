@@ -19,7 +19,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     TextView title;
     EditText userName;
-    //ImageView profileImageView;
     EditText email;
     EditText password;
     Button registerBtn;
@@ -35,15 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
         userName = findViewById(R.id.register_activity_username);
         password = findViewById(R.id.register_activity_password);
         email = findViewById(R.id.register_activity_email_edit_text);
-       // profileImageView = findViewById(R.id.register_add_img_icon_activity_imageView);
         registerBtn = findViewById(R.id.register_activity_register_btn);
 
-//        profileImageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Gallery.chooseImageFromGallery(RegisterActivity.this);
-//            }
-//        });
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +66,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(data != null && resultCode == RESULT_OK){
             profileImageUri = data.getData();
-            //profileImageView.setImageURI(profileImageUri);
         }
         else {
             Toast.makeText(this, "No image was selected", Toast.LENGTH_SHORT).show();

@@ -115,7 +115,6 @@ public class AddFragment extends Fragment {
         newRecipe.recContent = recipeInstructionsInput.getText().toString();
         newRecipe.recipeImgUrl = null;
         newRecipe.userId = User.getInstance().id;
-       // newRecipe.recipeImgUrl = User.getInstance().profileImageUrl;
         newRecipe.username = User.getInstance().name;
         newRecipe.categoryId = chooseCategory.getSelectedItem().toString();
         newRecipe.lat = Model.instance.getLocation().latitude;

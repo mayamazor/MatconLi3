@@ -18,7 +18,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_home);
 
         logo = findViewById(R.id.home_activity_main_logo);
         progressBar = findViewById(R.id.progressBar);

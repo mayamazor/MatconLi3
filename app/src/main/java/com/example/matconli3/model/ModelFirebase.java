@@ -101,7 +101,7 @@ public class ModelFirebase {
                 username != null && !username.equals("") &&
                 password != null && !password.equals("") &&
                 email != null && !email.equals("") ){
-            //      &&          imageUri != null
+
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {
@@ -136,8 +136,6 @@ public class ModelFirebase {
                     for(QueryDocumentSnapshot doc : task.getResult()){
                         Map<String,Object> json = doc.getData();
                         Recipe recipe;
-//                        recipe=from_Map(json);
-//                        recipesData.add(recipe);
                     }
                 }
                 listener.onComplete(recipesData);
@@ -145,28 +143,6 @@ public class ModelFirebase {
             }
         });
     }
-
-
-
-
-//    public static void getAllRecipes(final Model.Listener<List<Recipe>> listener) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection(RECIPES_COLLECTION).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                List<Recipe> recData = null;
-//                if (task.isSuccessful()){
-//                    recData = new LinkedList<Recipe>();
-//                    for(QueryDocumentSnapshot doc : task.getResult()){
-//                        Recipe recipe = doc.toObject(Recipe.class);
-//                        recData.add(recipe);
-//                    }
-//                }
-//                listener.onComplete(recData);
-//            }
-//        });
-//    }
-
 
 
     public static void addRecipe(final Recipe recipe, final Model.Listener<Boolean> listener) {
@@ -181,17 +157,6 @@ public class ModelFirebase {
             }
         });
     }
-
-//    public static void updateRecipe(Recipe recipe, final Model.CompListener listener) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        Map<String, Object> recipeJson = toJson(recipe);
-//        db.collection(RECIPES_COLLECTION).document(recipe.id).set(recipeJson, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if (listener != null) listener.onComplete();
-//            }
-//        });
-//    }
 
     public static void deleteRecipe(Recipe recipe, final Model.Listener<Boolean> listener) {
        final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -256,7 +221,6 @@ public class ModelFirebase {
         newRecipe.recipeImgUrl = (String) json.get("recipeImgUrl");
         newRecipe.userId = (String) json.get("userId");
         newRecipe.username = (String) json.get("username");
-//        newRecipe.lat = (double) json.get("lat");
         newRecipe.lon = (double) json.get("lon");
         Timestamp ts = (Timestamp)json.get("lastUpdated");
         if (ts != null)
@@ -280,7 +244,6 @@ public class ModelFirebase {
             {
                 if (task.isSuccessful()){
                     User.getInstance().name = (String) task.getResult().get("username");
-             //       User.getInstance().profileImageUrl = (String) task.getResult().get("profileImageUrl");
                     User.getInstance().passsord = (String) task.getResult().get("password");
                     User.getInstance().address = (String) task.getResult().get("address");
                     User.getInstance().email = email;
@@ -297,53 +260,6 @@ public class ModelFirebase {
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("images");
-
-//        if (imageUri != null){
-//            String imageName = username + "." + getExtension(imageUri);
-//            final StorageReference imageRef = storageReference.child(imageName);
-//
-//            UploadTask uploadTask = imageRef.putFile(imageUri);
-//            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//                @Override
-//                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//                    if (!task.isSuccessful()){
-//                        throw task.getException();
-//                    }
-//                    return imageRef.getDownloadUrl();
-//                }
-//            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Uri> task) {
-//                    if (task.isSuccessful()){
-//
-//                        Map<String,Object> data = new HashMap<>();
-//                        data.put("profileImageUrl", task.getResult().toString());
-//                        data.put("username", username);
-//                        data.put("email", email);
-//                        data.put("info", "NA");
-//                        firebaseFirestore.collection("userProfileData").document(email).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                if (firebaseAuth.getCurrentUser() != null){
-//                                    firebaseAuth.signOut();
-//                                }
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Toast.makeText(MyApplication.context, "Fails to create user and upload data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//                    else if (!task.isSuccessful()){
-//                        Toast.makeText(MyApplication.context, task.getException().toString(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
-//        }
-//        else {
-//            Toast.makeText(MyApplication.context, "Please choose a profile image", Toast.LENGTH_SHORT).show();
-//        }
     }
 
 
@@ -367,9 +283,6 @@ public class ModelFirebase {
         if (username != null)
             json.put("username", username);
         else json.put("username", User.getInstance().name);
-//        if (profileImgUrl != null)
-//            json.put("profileImageUrl", profileImgUrl);
-//        else json.put("profileImageUrl", User.getInstance().profileImageUrl);
         json.put("email", User.getInstance().email);
 
         db.collection("userProfileData").document(User.getInstance().email).set(json).addOnCompleteListener(new OnCompleteListener<Void>()

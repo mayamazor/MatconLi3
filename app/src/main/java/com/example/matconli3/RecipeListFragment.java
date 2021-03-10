@@ -76,7 +76,6 @@ public class RecipeListFragment extends Fragment {
             }
         });
 
-        //live data
         liveData = viewModel.getDataByCategory(category);
         liveData.observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
@@ -177,7 +176,6 @@ public class RecipeListFragment extends Fragment {
         @NonNull
         @Override
         public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            //create row
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_recipes_row,parent,false);
 
             RecipeViewHolder recipeViewHolder = new RecipeViewHolder(view,listener);
@@ -186,7 +184,6 @@ public class RecipeListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-            // the connection between row to data
             Recipe recipe = data.get(position);
             holder.bind(recipe);
         }

@@ -28,14 +28,11 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-//    private ProfileViewModel viewModel;
-
     TextView userUsername;
     TextView userEmail;
     ImageView userProfileImage;
     Button editProfileBtn;
     Button myRecipesBook;
-
     Button logoutBtn;
 
 
@@ -48,7 +45,6 @@ public class ProfileFragment extends Fragment {
 
         userUsername = view.findViewById(R.id.profile_fragment_username);
         userEmail = view.findViewById(R.id.profile_fragment_email);
-        //userProfileImage = view.findViewById(R.id.profile_fragment_profile_image_view);
 
         editProfileBtn = view.findViewById(R.id.profile_fragment_edit);
         editProfileBtn.setOnClickListener(new View.OnClickListener()
@@ -70,7 +66,6 @@ public class ProfileFragment extends Fragment {
                 Navigation.findNavController(view).navigate(action);
             }
         });
-       //   myRecipesBook.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_profile_to_userRecipes));
 
         logoutBtn= view.findViewById(R.id.profile_fragment_logout);
         logoutBtn.setOnClickListener(new View.OnClickListener()
@@ -109,12 +104,7 @@ public class ProfileFragment extends Fragment {
         userUsername.setText(User.getInstance().name);
         userEmail.setText(User.getInstance().email);
 
-//        if (User.getInstance().profileImageUrl != null)
-//        {
-//            Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(userProfileImage);
-//        }
+
     }
-
-
 
 }

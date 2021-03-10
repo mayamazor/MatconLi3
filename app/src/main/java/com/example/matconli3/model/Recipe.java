@@ -65,26 +65,7 @@ public class Recipe implements Serializable {
         this.id = id;
     }
 
-//    public void setOwnerid(String name) {
-//        this.Ownerid = Ownerid;
-//    }
-//
-//    public void setOwenrName(String OwenrName) {
-//        this.OwenrName = OwenrName;
-//    }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
-//    public void setLocation(String location) {
-//        this.location = location;
-//    }
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
-//    public void setAvatar(String avatar) {
-//        this.avatar = avatar;
-//    }
+
 
 ///// get
 
@@ -164,25 +145,6 @@ public class Recipe implements Serializable {
     public void setLon(double lon) {
         this.lon = lon;
     }
-//    public String getOwnerid() {
-//        return Ownerid;
-//    }
-//
-//    public String getOwenrName() {
-//        return OwenrName;
-//    }
-//    public String getTitle() {
-//        return title;
-//    }
-//    public String getLocation() {
-//        return location;
-//    }
-//    public String getDescription() {
-//        return description;
-//    }
-//    public String getAvatar() {
-//        return avatar;
-//    }
 
     public void setLastUpdated(long lastUpdated) {
         this.lastUpdated = lastUpdated;

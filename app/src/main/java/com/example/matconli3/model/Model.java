@@ -48,9 +48,7 @@ public LiveData<List<Recipe>> getAllRecipes(){
         refreshAllRecipes(null);
         return recipe;
     }
-//    public LiveData<List<Recipe>> getUserRecipes(User currentUser) {
-//        return AppLocalDb.db.recipeDao().getUserRecipes(currentUser.id);
-//    }
+
 
     public LiveData<List<Recipe>> getAllRecipesPerUser(String userId) {
         LiveData<List<Recipe>> liveData = AppLocalDb.db.recipeDao().getUserRecipes(userId);
@@ -107,11 +105,7 @@ public LiveData<List<Recipe>> getAllRecipes(){
             }
         });
     }
-//    public void updateRecipe(Recipe recipe,Listener<Boolean> listener) {
-//        modelFirebase.updateRecipe(recipe, (CompListener) listener);
-//
-//
-//    }
+
     public void updateUserProfile(String username, String profileImgUrl, Listener<Boolean> listener) {
         modelFirebase.updateUserProfile(username, profileImgUrl, listener);
     }
@@ -142,25 +136,7 @@ public LiveData<List<Recipe>> getAllRecipes(){
         }.execute();
     }
 
-//    @SuppressLint("StaticFieldLeak")
-//    public void deleteRecipes(final List<Recipe> recipes) {
-//        new AsyncTask<String, String, String>() {
-//            @Override
-//            protected String doInBackground(String... strings) {
-//                for (Recipe recipe : recipes) {
-//                    AppLocalDb.db.recipeDao().delete(recipe);
-//                    Log.d("TAG","deleted");
-//                }
-//                return "";
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String s) {
-//                super.onPostExecute(s);
-//                Log.d("TAG", "deleted recipes");
-//            }
-//        }.execute("");
-//    }
+
 
     public void setUserAppData(String email) {
         ModelFirebase.setUserAppData(email);
